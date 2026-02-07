@@ -1,0 +1,322 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EventSpace</title>
+
+    <!-- Подключение Bootstrap -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- Иконки -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Шрифты (как в дизайне Artista) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Coffee.styles.css" asp-append-version="true" />
+
+    <style>
+        /* CSS ДЛЯ ХЕДЕРА И ФУТЕРА В СТИЛЕ ARTISTA */
+        :root {
+            --bg-dark: #1f1f1f; /* Темно-серый фон шапки */
+            --bg-beige: #f9f7f2; /* Основной фон сайта */
+            --text-light: #ffffff;
+            --accent-gold: #c6a87c; /* Золотой акцент */
+        }
+
+        body {
+            background-color: var(--bg-beige);
+            font-family: 'Montserrat', sans-serif;
+            color: #2c2c2c;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- HEADER STYLES --- */
+        .site-header {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            padding-top: 20px;
+        }
+
+        /* Верхняя полоса: Соцсети - Лого - Профиль */
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Логотип */
+        .brand-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--text-light);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+            .brand-logo:hover {
+                color: var(--accent-gold);
+                text-decoration: none;
+            }
+
+        .brand-subtitle {
+            font-size: 0.6rem;
+            text-align: center;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: #888;
+            margin-top: -5px;
+            display: block;
+        }
+
+        /* Соцсети (слева) */
+        .social-links a {
+            color: #aaa;
+            margin-right: 15px;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+            .social-links a:hover {
+                color: var(--accent-gold);
+            }
+
+        /* Правая часть (Логин/Админка) */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+            .header-actions a {
+                color: #fff;
+                text-decoration: none;
+                font-size: 0.9rem;
+            }
+
+        /* Нижняя полоса: Меню */
+        .header-nav {
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-link-custom {
+            color: #ccc;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            margin: 0 20px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+            .nav-link-custom:hover, .nav-link-custom.active {
+                color: var(--text-light);
+                text-decoration: underline;
+                text-underline-offset: 5px;
+                text-decoration-color: var(--accent-gold);
+            }
+
+        /* Dropdown для Админки */
+        .admin-dropdown .dropdown-menu {
+            background-color: var(--bg-dark);
+            border: 1px solid #333;
+        }
+
+        .admin-dropdown .dropdown-item {
+            color: #ccc;
+        }
+
+            .admin-dropdown .dropdown-item:hover {
+                background-color: #333;
+                color: white;
+            }
+
+        /* --- FOOTER STYLES --- */
+        .site-footer {
+            background-color: #1f1f1f; /* Темно-серый цвет (как в шапке) */
+            color: #b0b0b0; /* Светло-серый текст */
+            font-family: 'Manrope', sans-serif;
+            padding-top: 4rem;
+            padding-bottom: 2rem;
+            margin-top: auto; /* Прижать к низу страницы */
+            border-top: 1px solid #333; /* Едва заметная граница сверху */
+        }
+
+        .footer-title {
+            color: #ffffff; /* Заголовки белые */
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .footer-link {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: 0.3s;
+            display: block; /* Чтобы ссылка занимала строку */
+            margin-bottom: 10px; /* Отступ между ссылками */
+            font-size: 0.95rem;
+        }
+
+            .footer-link:hover {
+                color: #c6a87c; /* Золотой при наведении */
+                text-decoration: none;
+                padding-left: 5px; /* Эффект сдвига */
+            }
+
+        .footer-social-icon {
+            color: #b0b0b0;
+            font-size: 1.2rem;
+            margin-right: 15px;
+            transition: 0.3s;
+        }
+
+            .footer-social-icon:hover {
+                color: #ffffff;
+            }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <!-- Верхний ряд: Соцсети | Лого | Логин -->
+            <div class="header-top">
+                <!-- 1. Соцсети (Слева) -->
+                <div class="social-links d-none d-md-block">
+                    <a href="#"><i class="bi bi-instagram"></i></a>
+                    <a href="#"><i class="bi bi-telegram"></i></a>
+                    <a href="#"><i class="bi bi-whatsapp"></i></a>
+                </div>
+
+                <!-- 2. Логотип (Центр) -->
+                <div class="text-center">
+                    <a asp-page="/Index" class="brand-logo">
+                        PRAWODAR<span style="color:var(--accent-gold)">.</span>
+                    </a>
+                    <span class="brand-subtitle">Lectorium & Events</span>
+                </div>
+
+                <!-- 3. Действия (Справа) -->
+                <div class="header-actions">
+                    <!-- Админка (Dropwdown) -->
+                    @if (true) /* Верните User.IsInRole("Admin") */
+                    {
+                        <div class="dropdown admin-dropdown">
+                            <a class="dropdown-toggle text-uppercase small fw-bold" href="#" role="button" id="adminMenu" data-bs-toggle="dropdown" aria-expanded="false" style="color: #e74c3c;">
+                                <i class="bi bi-shield-lock"></i> Админ
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminMenu">
+                                <li><a class="dropdown-item" asp-area="Admin" asp-page="/Events/Index">Все события</a></li>
+                                <li><a class="dropdown-item" asp-area="Admin" asp-page="/Events/Create">+ Создать</a></li>
+                                <li><hr class="dropdown-divider bg-secondary"></li>
+                                <li><a class="dropdown-item" asp-area="Admin" asp-page="/Orders/Index">Заказы</a></li>
+                            </ul>
+                        </div>
+                    }
+
+                    <!-- Login Partial (Вход/Регистрация) -->
+                    <!-- Примечание: стандартный LoginPartial может иметь свои стили, возможно потребуется доработка _LoginPartial.cshtml, чтобы убрать класс text-dark -->
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+
+            <!-- Нижний ряд: Меню навигации -->
+            <nav class="header-nav d-none d-md-flex">
+                <a class="nav-link-custom" asp-page="/Index">Главная</a>
+                <a class="nav-link-custom" asp-page="/Events/Index">Афиша</a>
+                <a class="nav-link-custom" asp-page="/Contacts/About">О нас</a>
+                <a class="nav-link-custom" asp-page="/Contacts/Contacts">Контакты</a>
+            </nav>
+
+            <!-- Мобильное меню (гамбургер) - упрощенное -->
+            <div class="d-md-none text-center pb-3">
+                <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">
+                    Меню <i class="bi bi-list"></i>
+                </button>
+                <div class="collapse mt-3" id="mobileMenu">
+                    <a class="d-block py-2 text-white text-decoration-none" asp-page="/Index">Главная</a>
+                    <a class="d-block py-2 text-white text-decoration-none" asp-page="/Events/Index">Афиша</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main role="main" class="pb-3">
+        <div class="container-fluid p-0">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row gy-5">
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title">EventSpace</h5>
+                    <p class="mb-4" style="line-height: 1.6; max-width: 90%;">
+                        Лекторий и творческое пространство в самом центре города. Место для идей и вдохновения.
+                    </p>
+                    <div class="d-flex">
+                        <a href="#" class="footer-social-icon"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="footer-social-icon"><i class="bi bi-telegram"></i></a>
+                        <a href="#" class="footer-social-icon"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title">Афиша</h5>
+                    <a href="#" class="footer-link">Расписание</a>
+                    <a href="#" class="footer-link">Курсы лекций</a>
+                    <a href="#" class="footer-link">Мастер-классы</a>
+                    <a href="#" class="footer-link">Архив событий</a>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title">Посетителям</h5>
+                    <a href="#" class="footer-link">Сертификаты</a>
+                    <a href="#" class="footer-link">Правила посещения</a>
+                    <a href="#" class="footer-link">Возврат билетов</a>
+                    <a href="#" class="footer-link">Частые вопросы</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title">Контакты</h5>
+                    <p class="mb-2 text-white"><i class="bi bi-geo-alt me-2 text-secondary"></i> Минск, ул. Пушкина, 100</p>
+                    <p class="mb-2 text-white"><i class="bi bi-telephone me-2 text-secondary"></i> +375 (29) 123-45-67</p>
+                    <p class="mb-2"><a href="mailto:info@eventspace.by" class="footer-link m-0" style="display:inline;">info@eventspace.by</a></p>
+                    <p class="mt-3 text-secondary small">Ежедневно с 10:00 до 22:00</p>
+                </div>
+
+            </div>
+            <hr class="my-5" style="border-color: rgba(255,255,255,0.1); opacity: 1;">
+
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <span class="small text-secondary">© @DateTime.Now.Year EventSpace. Все права защищены.</span>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-secondary small text-decoration-none me-3 hover-white">Политика конфиденциальности</a>
+                    <a href="#" class="text-secondary small text-decoration-none hover-white">Договор оферты</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

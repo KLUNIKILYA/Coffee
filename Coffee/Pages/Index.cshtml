@@ -1,0 +1,254 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Главная - EventSpace";
+}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+
+<section class="hero-main">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1 class="hero-title">PRAWODAR</h1>
+        <p class="hero-subtitle">
+            ОТКРЫТЫЙ ЛЕКТОРИЙ И ПРОСТРАНСТВО ДЛЯ СОБЫТИЙ<br>
+            Слушай экспертов, учись новому или проведи свою лекцию у нас
+        </p>
+        <div class="mt-4">
+            <a href="#events" class="btn-hero btn-hero-white">Ближайшие события</a>
+            <a href="#rent" class="btn-hero btn-hero-outline">Организаторам</a>
+        </div>
+    </div>
+</section>
+
+<!-- 2. БЛИЖАЙШИЕ СОБЫТИЯ (Теперь сразу после Hero) -->
+<section id="events" class="py-5">
+    <div class="container py-4">
+        <h2 class="section-title">Афиша Мероприятий</h2>
+
+        <div class="row">
+            @if (Model.UpcomingEvents.Any())
+            {
+                foreach (var item in Model.UpcomingEvents)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="event-card">
+                            <div class="event-thumb">
+                                <span class="event-date-badge">@item.StartDate.ToString("dd.MM")</span>
+                                <a asp-page="/Events/Details" asp-route-id="@item.Id">
+                                    <img src="@($"https://picsum.photos/seed/{item.Id}/600/400")" alt="@item.Title">
+                                </a>
+                            </div>
+                            <h5 class="event-title">
+                                <a asp-page="/Events/Details" asp-route-id="@item.Id" class="text-decoration-none text-dark">
+                                    @item.Title
+                                </a>
+                            </h5>
+                            <div class="event-meta">
+                                <span><i class="bi bi-clock"></i> @item.StartDate.ToString("HH:mm")</span>
+                                <span><i class="bi bi-ticket-perforated"></i> От @((int)item.Price) ₽</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="event-card">
+                        <div class="event-thumb">
+                            <span class="event-date-badge">18 ФЕВ</span>
+                            <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=600" alt="Lecture">
+                        </div>
+                        <h5 class="event-title">Искусственный интеллект: будущее уже здесь</h5>
+                        <div class="event-meta">
+                            <span>Лекция / IT</span>
+                            <span>19:00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="event-card">
+                        <div class="event-thumb">
+                            <span class="event-date-badge">21 ФЕВ</span>
+                            <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=600" alt="Psychology">
+                        </div>
+                        <h5 class="event-title">Психология общения: как слышать других</h5>
+                        <div class="event-meta">
+                            <span>Воркшоп</span>
+                            <span>14:00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="event-card">
+                        <div class="event-thumb">
+                            <span class="event-date-badge">25 ФЕВ</span>
+                            <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=600" alt="Business">
+                        </div>
+                        <h5 class="event-title">Личный бренд в 2026 году</h5>
+                        <div class="event-meta">
+                            <span>Мастер-класс</span>
+                            <span>18:30</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="text-center mt-5">
+            <a asp-page="/Events/Index" class="btn btn-outline-dark rounded-pill px-5 py-3 text-uppercase" style="letter-spacing: 0.1em;">Смотреть всё расписание</a>
+        </div>
+    </div>
+</section>
+
+<section id="rent" class="py-5 bg-white">
+    <div class="container py-4">
+        <h2 class="section-title mb-5">Возможности Пространства</h2>
+        <div class="row g-4">
+            <!-- Левая карточка: Для слушателей -->
+            <div class="col-md-6">
+                <a href="#events" class="info-card">
+                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1000&auto=format&fit=crop" alt="Слушатели">
+                    <div class="info-overlay"></div>
+                    <div class="info-content">
+                        <h4 class="info-title">Стать гостем</h4>
+                        <p class="info-desc">Приходите за знаниями. У нас выступают ученые, предприниматели, путешественники и творческие люди. Живое общение и кофе-брейки.</p>
+                        <div class="mt-3 text-white fw-bold text-uppercase small">Смотреть афишу &rarr;</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="#" class="info-card">
+                    <img src="https://images.unsplash.com/photo-1475721027767-4d529c145753?q=80&w=1000&auto=format&fit=crop" alt="Аренда">
+                    <div class="info-overlay"></div>
+                    <div class="info-content">
+                        <h4 class="info-title">Провести событие</h4>
+                        <p class="info-desc">Ищете место для лекции, мастер-класса или презентации? Арендуйте наш зал. Мы предоставим оборудование и поможем с организацией.</p>
+                        <div class="mt-3 text-white fw-bold text-uppercase small">Условия аренды &rarr;</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center mb-5">
+                <h2 class="section-title mb-3">О ПЛОЩАДКЕ</h2>
+                <p class="text-muted">PRAWODAR — это современный зал-трансформер в историческом центре, подходящий для любого формата: от камерных лекций до громких презентаций.</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-mic"></i></div>
+                    <h5 class="feature-title">Проф. Звук</h5>
+                    <p class="feature-text">Радиомикрофоны, микшерный пульт и акустика для чистого звучания голоса спикера.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-projector"></i></div>
+                    <h5 class="feature-title">Видео и Свет</h5>
+                    <p class="feature-text">Проектор 4K, большой экран и настраиваемое освещение для создания нужной атмосферы.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-geo-alt"></i></div>
+                    <h5 class="feature-title">Центр Города</h5>
+                    <p class="feature-text">5 минут от метро. Удобная парковка для гостей и отдельный вход.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-box">
+                    <div class="feature-icon"><i class="bi bi-people"></i></div>
+                    <h5 class="feature-title">Вместимость</h5>
+                    <p class="feature-text">Комфортная посадка до 50 человек. Возможность трансформации зала под фуршет.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 5. РЕЗИДЕНТЫ И ЭКСПЕРТЫ (Разные сферы) -->
+<section class="py-5 bg-white">
+    <div class="container">
+        <h2 class="section-title">Наши спикеры</h2>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="speaker-card">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=300" class="speaker-photo" alt="Алексей">
+                    <h5 class="serif-font mb-1">Алексей Волков</h5>
+                    <small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Предприниматель</small>
+                    <p class="mt-3 text-secondary small">Эксперт по стартапам, рассказывает о маркетинге и масштабировании бизнеса.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="speaker-card">
+                    <img src="https://images.unsplash.com/photo-1573496359-136d475583dc?q=80&w=300" class="speaker-photo" alt="Елена">
+                    <h5 class="serif-font mb-1">Елена Новикова</h5>
+                    <small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Психолог</small>
+                    <p class="mt-3 text-secondary small">Ведет цикл лекций об эмоциональном интеллекте и отношениях.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="speaker-card">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=300" class="speaker-photo" alt="Дмитрий">
+                    <h5 class="serif-font mb-1">Дмитрий Зуев</h5>
+                    <small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">IT-Архитектор</small>
+                    <p class="mt-3 text-secondary small">Лекции о технологиях будущего, нейросетях и цифровой безопасности.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="speaker-card">
+                    <img src="https://images.unsplash.com/photo-1598550874175-4d7112ee7f8e?q=80&w=300" class="speaker-photo" alt="Мария">
+                    <h5 class="serif-font mb-1">Мария Ким</h5>
+                    <small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Путешественник</small>
+                    <p class="mt-3 text-secondary small">Организует встречи клуба путешественников, делится маршрутами.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 6. КОНТАКТЫ + КАРТА -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-0 rounded overflow-hidden shadow-sm">
+            <div class="col-lg-5 bg-white p-5 d-flex flex-column justify-content-center">
+                <h3 class="serif-font mb-4">Контакты</h3>
+
+                <div class="mb-4">
+                    <p class="text-muted text-uppercase small mb-1">Адрес</p>
+                    <p class="fs-5">ул. Пушкина, д. 100, лофт 100</p>
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-muted text-uppercase small mb-1">Аренда и билеты</p>
+                    <p class="fs-5">+375 (29) 000-00-00</p>
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-muted text-uppercase small mb-1">Email</p>
+                    <p class="fs-5">hello@НАЗВАНИЕ</p>
+                </div>
+
+                <div class="mt-2">
+                    <a href="#" class="btn btn-dark rounded-pill px-4">Написать в Telegram</a>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <!-- Карта с фильтром ч/б -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2350.81628178822!2d27.551381312384954!3d53.90013357235227!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dbcf956a655555%3A0x464f8992ac771321!2sPalace%20of%20the%20Republic!5e0!3m2!1sen!2sby!4v1703080076236!5m2!1sen!2sby" width="100%" height="100%" style="min-height: 400px; border:0; filter: grayscale(100%);" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+</section>

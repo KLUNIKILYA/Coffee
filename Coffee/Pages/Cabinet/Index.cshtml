@@ -1,0 +1,15 @@
+﻿@page
+@model Coffee.Pages.Cabinet.IndexModel
+@{
+    ViewData["Title"] = "Личный кабинет";
+}
+
+<h1>Добро пожаловать, @Model.Username!</h1>
+
+<div class="alert alert-info">
+    Здесь скоро появится история ваших билетов.
+</div>
+
+<a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn btn-primary">
+    Настройки профиля
+</a>

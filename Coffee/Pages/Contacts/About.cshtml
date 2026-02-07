@@ -1,0 +1,173 @@
+﻿@page
+@model AboutModel
+@{
+    ViewData["Title"] = "О нас - EventSpace";
+}
+
+<!-- Небольшой локальный стиль, чтобы переопределить высоту Hero только для этой страницы -->
+<style>
+    .page-hero {
+        position: relative;
+        height: 50vh; /* Меньше, чем на главной */
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        /* Другое фоновое изображение для разнообразия */
+        background: url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000&auto=format&fit=crop') no-repeat center center/cover;
+    }
+
+    .quote-block {
+        border-left: 3px solid var(--accent-gold);
+        padding-left: 20px;
+        font-style: italic;
+        color: #555;
+    }
+</style>
+
+<!-- 1. ЗАГОЛОВОК СТРАНИЦЫ -->
+<section class="page-hero">
+    <div class="hero-overlay"></div> <!-- Тот же класс затемнения -->
+    <div class="hero-content">
+        <h1 class="hero-title" style="font-size: 3rem;">О ПРОЕКТЕ</h1>
+        <p class="hero-subtitle mb-0">
+            PRAWODAR — место, где идеи обретают форму
+        </p>
+    </div>
+</section>
+
+<!-- 2. ИСТОРИЯ И МИССИЯ -->
+<section class="py-5 bg-white">
+    <div class="container py-4">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <h2 class="serif-font mb-4">Наша история</h2>
+                <p class="text-secondary" style="line-height: 1.8;">
+                    Мы открыли двери нашего лектория в 2024 году, вдохновившись атмосферой старых европейских салонов, где собирались мыслители, художники и предприниматели.
+                </p>
+                <p class="text-secondary" style="line-height: 1.8;">
+                    Здание, в котором находится PRAWODAR, имеет богатую историю. Раньше здесь располагалась типография, а сегодня — это современный лофт, сохранивший дух созидания. Мы бережно отреставрировали кирпичную кладку и добавили современные технологии, чтобы создать идеальное пространство для диалога.
+                </p>
+
+                <div class="quote-block mt-4">
+                    <p class="mb-0 font-family-serif fs-5">
+                        "Мы верим, что окружение определяет мышление. В красивых стенах рождаются красивые идеи."
+                    </p>
+                    <small class="text-muted d-block mt-2">— Основатели PRAWODAR</small>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=600" class="img-fluid rounded shadow-sm mb-3" alt="Interior 1">
+                        <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=600" class="img-fluid rounded shadow-sm" alt="Interior 2">
+                    </div>
+                    <div class="col-6 pt-5">
+                        <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=600" class="img-fluid rounded shadow-sm" alt="Interior 3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 3. ЦИФРЫ (Counter) -->
+<section class="py-5" style="background-color: var(--bg-beige);">
+    <div class="container py-4">
+        <div class="row text-center g-4">
+            <div class="col-md-3 col-6">
+                <div class="display-4 serif-font mb-2" style="color: var(--accent-gold);">250+</div>
+                <p class="text-uppercase small text-muted fw-bold">Проведенных событий</p>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="display-4 serif-font mb-2" style="color: var(--accent-gold);">120</div>
+                <p class="text-uppercase small text-muted fw-bold">Кв. метров лофта</p>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="display-4 serif-font mb-2" style="color: var(--accent-gold);">5k+</div>
+                <p class="text-uppercase small text-muted fw-bold">Гостей за год</p>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="display-4 serif-font mb-2" style="color: var(--accent-gold);">50</div>
+                <p class="text-uppercase small text-muted fw-bold">Посадочных мест</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 4. НАША КОМАНДА (Реюзинг стилей .speaker-card) -->
+<section class="py-5 bg-white">
+    <div class="container py-4">
+        <h2 class="section-title">Команда</h2>
+        <p class="text-center text-muted mb-5 mx-auto" style="max-width: 600px;">
+            Люди, которые создают атмосферу, встречают гостей и следят за тем, чтобы каждое мероприятие прошло идеально.
+        </p>
+
+        <div class="row g-4 justify-content-center">
+            <!-- Член команды 1 -->
+            <div class="col-md-4 col-lg-3">
+                <div class="speaker-card">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400" class="speaker-photo" alt="Анна">
+                    <h5 class="serif-font mb-1">Анна Власова</h5>
+                    <small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Арт-директор</small>
+                    <p class="mt-3 text-secondary small">Отвечает за концепцию мероприятий и подбор спикеров. Душа нашего пространства.</p>
+                </div>
+            </div>
+            <!-- Член команды 2 -->
+            <div class="col-md-4 col-lg-3">
+                <div class="speaker-card">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400" class="speaker-photo" alt="Михаил">
+                    <h5 class="serif-font mb-1">Михаил Громов</h5>
+                    <small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Управляющий</small>
+                    <p class="mt-3 text-secondary small">Следит за тем, чтобы вся техника работала, а кофе всегда был горячим.</p>
+                </div>
+            </div>
+            <!-- Член команды 3 -->
+            <div class="col-md-4 col-lg-3">
+                <div class="speaker-card">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400" class="speaker-photo" alt="Юлия">
+                    <h5 class="serif-font mb-1">Юлия Ким</h5>
+                    <small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Ивент-менеджер</small>
+                    <p class="mt-3 text-secondary small">Помогает арендаторам организовать событие от рассадки до фуршета.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 5. ГАЛЕРЕЯ / АТМОСФЕРА -->
+<section class="py-5">
+    <div class="container py-4">
+        <h2 class="section-title mb-5">Атмосфера</h2>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?q=80&w=800" class="w-100 h-100 rounded shadow-sm" style="object-fit: cover; min-height: 250px;" alt="Party">
+            </div>
+            <div class="col-md-8">
+                <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1200" class="w-100 h-100 rounded shadow-sm" style="object-fit: cover; min-height: 250px;" alt="Lecture">
+            </div>
+            <div class="col-md-6">
+                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800" class="w-100 h-100 rounded shadow-sm" style="object-fit: cover; min-height: 300px;" alt="People">
+            </div>
+            <div class="col-md-6">
+                <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=800" class="w-100 h-100 rounded shadow-sm" style="object-fit: cover; min-height: 300px;" alt="Details">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 6. CTA (Призыв к действию) -->
+<section class="py-5 bg-dark text-white text-center">
+    <div class="container py-4">
+        <h2 class="serif-font mb-3">Станьте частью нашего сообщества</h2>
+        <p class="text-secondary mb-4 mx-auto" style="max-width: 600px;">
+            Подписывайтесь на новости, приходите на лекции или организуйте своё событие в стенах PRAWODAR.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+            <a asp-page="/Events/Index" class="btn btn-outline-light rounded-pill px-4 py-2">Смотреть афишу</a>
+            <a href="#contacts" class="btn btn-light rounded-pill px-4 py-2 text-dark">Связаться с нами</a>
+        </div>
+    </div>
+</section>

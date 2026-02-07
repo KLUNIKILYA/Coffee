@@ -1,0 +1,48 @@
+﻿@page
+@model Coffee.Areas.Admin.Pages.Events.CreateModel
+@{
+    ViewData["Title"] = "Создать мероприятие";
+    // Layout = "/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Новое мероприятие</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post">
+                <div class="mb-3">
+                    <label asp-for="Event.Title" class="form-label">Название</label>
+                    <input asp-for="Event.Title" class="form-control" />
+                    <span asp-validation-for="Event.Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Event.Description" class="form-label">Описание</label>
+                    <textarea asp-for="Event.Description" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <label asp-for="Event.StartDate" class="form-label">Дата и время</label>
+                        <input asp-for="Event.StartDate"
+                               class="form-control"
+                               type="datetime-local"
+                               asp-format="{0:yyyy-MM-ddTHH:mm}" /></div>
+                    <div class="col">
+                        <label asp-for="Event.Price" class="form-label">Цена</label>
+                        <input asp-for="Event.Price" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Event.Capacity" class="form-label">Количество мест</label>
+                    <input asp-for="Event.Capacity" class="form-control" />
+                </div>
+
+                <button type="submit" class="btn btn-success">Сохранить</button>
+                <a href="/" class="btn btn-secondary">Отмена</a>
+            </form>
+        </div>
+    </div>
+</div>

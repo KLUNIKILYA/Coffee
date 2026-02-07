@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Админка - EventSpace</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .admin-sidebar {
+            min-height: 100vh;
+            background: #212529;
+            color: white;
+        }
+
+            .admin-sidebar a {
+                color: #adb5bd;
+                text-decoration: none;
+                padding: 10px 15px;
+                display: block;
+            }
+
+                .admin-sidebar a:hover, .admin-sidebar a.active {
+                    background: #343a40;
+                    color: white;
+                }
+
+            .admin-sidebar i {
+                margin-right: 10px;
+            }
+    </style>
+</head>
+<body>
+    <div class="d-flex">
+        <div class="admin-sidebar d-flex flex-column flex-shrink-0 p-3" style="width: 250px;">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <span class="fs-4 fw-bold">EventSpace</span>
+            </a>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a asp-area="Admin" asp-page="/Events/Index" class="nav-link text-white">
+                        <i></i> Event
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Admin" asp-page="/Orders/Index" class="nav-link text-white">
+                        <i></i> Orders
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Admin" asp-page="/Analytics/Index" class="nav-link text-white">
+                        <i></i> Analitycs
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Admin" asp-page="/Events/Create" class="nav-link text-white">
+                        <i></i> Create Event
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Admin" asp-page="/Lecturers/Create" class="nav-link text-white">
+                        <i></i> Create Lecturers
+                    </a>
+                </li>
+            </ul>
+            <hr>
+            <div>
+                <a href="/" class="nav-link text-warning">
+                    <i class="bi bi-arrow-left-circle"></i> On the site
+                </a>
+            </div>
+        </div>
+
+        <div class="flex-grow-1 p-4 bg-dark text-light">
+            <main role="main">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

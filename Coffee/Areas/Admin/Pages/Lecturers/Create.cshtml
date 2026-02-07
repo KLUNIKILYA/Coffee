@@ -1,0 +1,40 @@
+﻿@page
+@model Coffee.Areas.Admin.Pages.Lecturers.CreateModel
+@{
+    ViewData["Title"] = "Создать лектора";
+    // Layout = "/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>New Lecturers</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post">
+                <div class="mb-3">
+                    <label asp-for="Lecturer.FullName" class="form-label">Full Name</label>
+                    <input asp-for="Lecturer.FullName" class="form-control" />
+                    <span asp-validation-for="Lecturer.FullName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Lecturer.Bio" class="form-label">Bio</label>
+                    <textarea asp-for="Lecturer.Bio" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Lecturer.PhotoUrl" class="form-label">PhotoUrl</label>
+                    <textarea asp-for="Lecturer.PhotoUrl" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Lecturer.YoutubeLink" class="form-label">YoutubeLink</label>
+                    <textarea asp-for="Lecturer.YoutubeLink" class="form-control" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-success">Сохранить</button>
+                <a href="/" class="btn btn-secondary">Отмена</a>
+            </form>
+        </div>
+    </div>
+</div>

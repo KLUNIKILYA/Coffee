@@ -1,0 +1,290 @@
+﻿@page "{id:int}"
+@model Coffee.Pages.Events.DetailsModel
+@{
+    ViewData["Title"] = Model.Event?.Title ?? "Событие";
+    // Демо-данные, если модель пустая. Потом замените на @Model.Event...
+    var eventTitle = Model.Event?.Title ?? "Нейросети: практическое применение";
+    var eventImageUrl = "https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=2069&auto=format&fit=crop";
+    var eventPrice = (int)(Model.Event?.Price ?? 1500);
+}
+
+
+<style>
+    :root {
+        --bg-beige: #f9f7f2;
+        --text-dark: #2c2c2c;
+        --accent-gold: #c6a87c;
+        --brand-blue: #3498db; /* Яркий акцент для кнопок */
+    }
+
+    /* 1. HERO-СЕКЦИЯ (ПЕРВЫЙ ЭКРАН) */
+    .event-hero {
+        position: relative;
+        height: 60vh; /* 60% высоты экрана */
+        min-height: 450px;
+        background-size: cover;
+        background-position: center;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+        .event-hero::before { /* Затемняющий слой */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2));
+        }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+        padding: 20px;
+    }
+
+    .event-category-tag {
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(5px);
+        padding: 6px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 20px;
+        display: inline-block;
+    }
+
+    .event-hero-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.5rem;
+        text-shadow: 0 2px 15px rgba(0,0,0,0.5);
+        margin-bottom: 25px;
+    }
+
+    .event-key-info {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        font-family: 'Manrope', sans-serif;
+        font-size: 0.95rem;
+        opacity: 0.9;
+    }
+
+    .info-item i {
+        margin-right: 8px;
+        color: var(--accent-gold);
+    }
+
+    /* 2. ОСНОВНОЙ КОНТЕНТ */
+    .event-content-section {
+        background-color: var(--bg-beige);
+        padding: 4rem 0;
+    }
+
+    .event-description h2 {
+        font-family: 'Playfair Display', serif;
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+    }
+
+    .event-description p {
+        line-height: 1.8;
+        color: #555;
+        margin-bottom: 1.5rem;
+    }
+
+    .event-description ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .event-description li {
+        padding-left: 25px;
+        position: relative;
+        margin-bottom: 12px;
+    }
+
+        .event-description li::before {
+            content: '✓';
+            color: var(--accent-gold);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+    .ticket-widget {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+        position: sticky; /* <-- ГЛАВНАЯ МАГИЯ */
+        top: 100px; /* Отступ от верха при прокрутке */
+    }
+
+    .price-display {
+        font-family: 'Manrope', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--text-dark);
+        margin-bottom: 20px;
+    }
+
+    .btn-buy-ticket {
+        background-color: var(--brand-blue);
+        color: white !important;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        width: 100%;
+        display: block;
+        transition: 0.3s;
+    }
+
+        .btn-buy-ticket:hover {
+            background-color: #2980b9;
+            transform: scale(1.02);
+        }
+
+    .widget-info {
+        font-size: 0.8rem;
+        color: #888;
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    /* 4. БЛОК СПИКЕРА */
+    .speaker-section {
+        padding: 4rem 0;
+        background-color: white; /* Белый фон для контраста */
+    }
+
+    .speaker-photo {
+        width: 180px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 50%;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    }
+
+    .speaker-name {
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;
+    }
+
+    .speaker-title {
+        color: #777;
+        font-weight: 500;
+        margin-bottom: 1.5rem;
+    }
+
+    /* 5. КАРТА */
+    .map-section iframe {
+        filter: grayscale(1);
+        border-radius: 8px;
+        height: 400px;
+    }
+
+</style>
+
+<!-- 1. HERO-СЕКЦИЯ -->
+<div class="event-hero" style="background-image: url('@eventImageUrl');">
+    <div class="hero-content">
+        <span class="event-category-tag">Лекция / IT & Future</span>
+        <h1 class="event-hero-title">@eventTitle</h1>
+        <div class="event-key-info">
+            <span class="info-item"><i class="bi bi-calendar-event"></i> 14 февраля 2026</span>
+            <span class="info-item"><i class="bi bi-clock"></i> 19:00 - 21:00</span>
+            <span class="info-item"><i class="bi bi-geo-alt"></i> г. Минск, ул. Пушкина 100</span>
+        </div>
+    </div>
+</div>
+
+<!-- 2. ОСНОВНОЙ КОНТЕНТ -->
+<div class="event-content-section">
+    <div class="container">
+        <div class="row g-5">
+            <!-- Левая колонка: Описание -->
+            <div class="col-lg-8 event-description">
+                <h2>О лекции</h2>
+                <p>
+                    Искусственный интеллект — уже не фантастика, а реальный инструмент, меняющий бизнес, творчество и нашу повседневную жизнь. На этой лекции мы разберемся, как работают современные нейросети (ChatGPT, Midjourney, Stable Diffusion), где их можно применять уже сегодня и какие перспективы они открывают.
+                </p>
+                <p>
+                    Спикер простым языком объяснит сложные концепции, покажет живые примеры и даст практические советы, которые вы сможете использовать сразу после лекции.
+                </p>
+
+                <h2>Что вы узнаете:</h2>
+                <ul>
+                    <li>Ключевые отличия между разными типами нейросетей.</li>
+                    <li>Как правильно составлять запросы (промпты) для получения лучших результатов.</li>
+                    <li>Топ-5 бесплатных инструментов для работы с текстом и изображениями.</li>
+                    <li>Этические вопросы и будущее ИИ: чего нам ждать?</li>
+                    <li>Как интегрировать ИИ в свою работу для повышения эффективности.</li>
+                </ul>
+            </div>
+
+            <!-- Правая колонка: Виджет покупки -->
+            <div class="col-lg-4">
+                <div class="ticket-widget">
+                    <div class="price-display">@eventPrice ₽</div>
+                    <form>
+                        <div class="mb-3">
+                            <label for="ticketCount" class="form-label">Количество билетов:</label>
+                            <select id="ticketCount" class="form-select">
+                                <option selected>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                        <a href="#" class="btn-buy-ticket">Купить билет</a>
+                        <p class="widget-info">
+                            <i class="bi bi-shield-check"></i> Гарантия возврата и безопасная оплата
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 3. БЛОК СПИКЕРА -->
+<div class="speaker-section">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-md-4 text-center">
+                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400" alt="Спикер" class="speaker-photo">
+            </div>
+            <div class="col-md-8">
+                <h2 class="speaker-name">Дмитрий Зуев</h2>
+                <p class="speaker-title">IT-Архитектор, исследователь искусственного интеллекта</p>
+                <p class="text-secondary">
+                    Более 15 лет в IT-индустрии, работал в ведущих технологических компаниях. Последние 5 лет посвятил изучению и практическому применению моделей машинного обучения. Автор популярного Telegram-канала о нейросетях. Дмитрий умеет говорить о технологиях так, что понятно даже гуманитариям.
+                </p>
+                <a href="#" class="text-dark">Читать подробнее о спикере &rarr;</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5 map-section">
+    <div class="text-center mb-5">
+        <h2 style="font-family: 'Playfair Display';">Место проведения</h2>
+        <p class="text-muted">Наш лекторий находится в самом сердце города</p>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2350.81628178822!2d27.551381312384954!3d53.90013357235227!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dbcf956a655555%3A0x464f8992ac771321!2sPalace%20of%20the%20Republic!5e0!3m2!1sen!2sby!4v1703080076236!5m2!1sen!2sby" width="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+</div>
