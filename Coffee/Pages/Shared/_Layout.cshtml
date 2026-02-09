@@ -5,12 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - EventSpace</title>
 
-    <!-- Подключение Bootstrap -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <!-- Иконки -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <!-- Шрифты (как в дизайне Artista) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -19,12 +16,11 @@
     <link rel="stylesheet" href="~/Coffee.styles.css" asp-append-version="true" />
 
     <style>
-        /* CSS ДЛЯ ХЕДЕРА И ФУТЕРА В СТИЛЕ ARTISTA */
         :root {
-            --bg-dark: #1f1f1f; /* Темно-серый фон шапки */
-            --bg-beige: #f9f7f2; /* Основной фон сайта */
+            --bg-dark: #1f1f1f; 
+            --bg-beige: #f9f7f2; 
             --text-light: #ffffff;
-            --accent-gold: #c6a87c; /* Золотой акцент */
+            --accent-gold: #c6a87c; 
         }
 
         body {
@@ -36,14 +32,12 @@
             min-height: 100vh;
         }
 
-        /* --- HEADER STYLES --- */
         .site-header {
             background-color: var(--bg-dark);
             color: var(--text-light);
             padding-top: 20px;
         }
 
-        /* Верхняя полоса: Соцсети - Лого - Профиль */
         .header-top {
             display: flex;
             justify-content: space-between;
@@ -52,7 +46,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Логотип */
         .brand-logo {
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
@@ -77,7 +70,6 @@
             display: block;
         }
 
-        /* Соцсети (слева) */
         .social-links a {
             color: #aaa;
             margin-right: 15px;
@@ -89,7 +81,6 @@
                 color: var(--accent-gold);
             }
 
-        /* Правая часть (Логин/Админка) */
         .header-actions {
             display: flex;
             align-items: center;
@@ -102,7 +93,6 @@
                 font-size: 0.9rem;
             }
 
-        /* Нижняя полоса: Меню */
         .header-nav {
             padding: 15px 0;
             display: flex;
@@ -149,12 +139,12 @@
             font-family: 'Manrope', sans-serif;
             padding-top: 4rem;
             padding-bottom: 2rem;
-            margin-top: auto; /* Прижать к низу страницы */
-            border-top: 1px solid #333; /* Едва заметная граница сверху */
+            margin-top: auto; 
+            border-top: 1px solid #333; 
         }
 
         .footer-title {
-            color: #ffffff; /* Заголовки белые */
+            color: #ffffff; 
             font-family: 'Playfair Display', serif;
             font-size: 1.2rem;
             margin-bottom: 1.5rem;
@@ -166,15 +156,15 @@
             color: #b0b0b0;
             text-decoration: none;
             transition: 0.3s;
-            display: block; /* Чтобы ссылка занимала строку */
-            margin-bottom: 10px; /* Отступ между ссылками */
+            display: block; 
+            margin-bottom: 10px;
             font-size: 0.95rem;
         }
 
             .footer-link:hover {
-                color: #c6a87c; /* Золотой при наведении */
+                color: #c6a87c;
                 text-decoration: none;
-                padding-left: 5px; /* Эффект сдвига */
+                padding-left: 5px;
             }
 
         .footer-social-icon {
@@ -192,16 +182,13 @@
 <body>
     <header class="site-header">
         <div class="container">
-            <!-- Верхний ряд: Соцсети | Лого | Логин -->
             <div class="header-top">
-                <!-- 1. Соцсети (Слева) -->
                 <div class="social-links d-none d-md-block">
                     <a href="#"><i class="bi bi-instagram"></i></a>
                     <a href="#"><i class="bi bi-telegram"></i></a>
                     <a href="#"><i class="bi bi-whatsapp"></i></a>
                 </div>
 
-                <!-- 2. Логотип (Центр) -->
                 <div class="text-center">
                     <a asp-page="/Index" class="brand-logo">
                         PRAWODAR<span style="color:var(--accent-gold)">.</span>
@@ -209,10 +196,8 @@
                     <span class="brand-subtitle">Lectorium & Events</span>
                 </div>
 
-                <!-- 3. Действия (Справа) -->
                 <div class="header-actions">
-                    <!-- Админка (Dropwdown) -->
-                    @if (true) /* Верните User.IsInRole("Admin") */
+                    @if (true)
                     {
                         <div class="dropdown admin-dropdown">
                             <a class="dropdown-toggle text-uppercase small fw-bold" href="#" role="button" id="adminMenu" data-bs-toggle="dropdown" aria-expanded="false" style="color: #e74c3c;">
@@ -227,13 +212,10 @@
                         </div>
                     }
 
-                    <!-- Login Partial (Вход/Регистрация) -->
-                    <!-- Примечание: стандартный LoginPartial может иметь свои стили, возможно потребуется доработка _LoginPartial.cshtml, чтобы убрать класс text-dark -->
                     <partial name="_LoginPartial" />
                 </div>
             </div>
 
-            <!-- Нижний ряд: Меню навигации -->
             <nav class="header-nav d-none d-md-flex">
                 <a class="nav-link-custom" asp-page="/Index">Главная</a>
                 <a class="nav-link-custom" asp-page="/Events/Index">Афиша</a>
@@ -241,7 +223,6 @@
                 <a class="nav-link-custom" asp-page="/Contacts/Contacts">Контакты</a>
             </nav>
 
-            <!-- Мобильное меню (гамбургер) - упрощенное -->
             <div class="d-md-none text-center pb-3">
                 <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">
                     Меню <i class="bi bi-list"></i>

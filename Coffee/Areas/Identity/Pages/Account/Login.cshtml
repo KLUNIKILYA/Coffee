@@ -2,39 +2,94 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Вход в систему";
+    ViewData["Title"] = "Вход";
+    Layout = "/Pages/Shared/_AuthLayout.cshtml"; // Убедись, что используется правильный layout
 }
 
-<form id="account" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger text-center mb-3" role="alert"></div>
+<style>
+    /* Эти стили специфичны для формы, они остаются */
+    .form-control {
+        border: none;
+        border-bottom: 1px solid #e0e0e0;
+        border-radius: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
 
-    <div class="form-floating mb-3">
-        <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="name@example.com" />
-        <label asp-for="Input.Email">Email</label>
-        <span asp-validation-for="Input.Email" class="text-danger"></span>
-    </div>
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #2c2c2c;
+        }
 
-    <div class="form-floating mb-3">
-        <input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="Пароль" />
-        <label asp-for="Input.Password">Пароль</label>
-        <span asp-validation-for="Input.Password" class="text-danger"></span>
-    </div>
+    .form-floating > label {
+        padding-left: 0;
+    }
 
-    <div class="form-check mb-3">
-        <input class="form-check-input" asp-for="Input.RememberMe" />
-        <label class="form-check-label text-muted" asp-for="Input.RememberMe">
-            Запомнить меня
-        </label>
-    </div>
+    .btn-submit {
+        background: #2c2c2c;
+        color: white;
+        padding: 14px;
+        border: none;
+        border-radius: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 0.9rem;
+        font-weight: 700;
+        transition: background-color 0.3s;
+        width: 100%;
+        margin-top: 1rem;
+    }
 
-    <button id="login-submit" type="submit" class="btn btn-primary w-100 btn-lg fw-bold shadow-sm">Войти</button>
+        .btn-submit:hover {
+            background: black;
+        }
 
-    <div class="text-center mt-3">
-        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-decoration-none">
-            Нет аккаунта? <span class="fw-bold">Зарегистрироваться</span>
-        </a>
-    </div>
-</form>
+    .register-link a {
+        color: #2c2c2c;
+        font-weight: 700;
+        text-decoration: none;
+    }
+</style>
+
+<div class="auth-header">
+    <h1 class="auth-title">С возвращением!</h1>
+    <p class="text-muted">Войдите, чтобы продолжить</p>
+</div>
+
+<div class="auth-body">
+    <form id="account" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger text-center mb-3 small" role="alert"></div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="name@example.com" />
+            <label asp-for="Input.Email">Email</label>
+            <span asp-validation-for="Input.Email" class="text-danger small"></span>
+        </div>
+
+        <div class="form-floating mb-4">
+            <input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="Пароль" />
+            <label asp-for="Input.Password">Пароль</label>
+            <span asp-validation-for="Input.Password" class="text-danger small"></span>
+        </div>
+
+        <div class="form-check mb-3">
+            <input class="form-check-input" asp-for="Input.RememberMe" />
+            <label class="form-check-label text-muted" asp-for="Input.RememberMe">
+                Запомнить меня
+            </label>
+        </div>
+
+        <button id="login-submit" type="submit" class="btn-submit">Войти</button>
+
+        <div class="text-center mt-4 small text-muted register-link">
+            Нет аккаунта?
+            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">
+                Зарегистрироваться
+            </a>
+        </div>
+    </form>
+</div>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

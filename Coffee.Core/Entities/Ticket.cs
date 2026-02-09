@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coffee.Core.Entities.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace Coffee.Core.Entities
 {
-    public class Ticket
+    public class Ticket : BaseEntity
     {
-        public int Id { get; set; }
-
         public string UserId { get; set; } = string.Empty;
         public ApplicationUser User { get; set; } = null!;
 

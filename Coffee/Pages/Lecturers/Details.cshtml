@@ -1,4 +1,191 @@
-﻿@page
+﻿@page "{id:int}"
 @model Coffee.Pages.Lecturers.DetailsModel
 @{
+    ViewData["Title"] = Model.Lecturer.FullName;
 }
+
+<!-- Шрифты -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --bg-beige: #f9f7f2;
+        --text-dark: #2c2c2c;
+        --accent-red: #e74c3c;
+    }
+
+    body {
+        background-color: var(--bg-beige);
+        color: var(--text-dark);
+        font-family: 'Manrope', sans-serif;
+    }
+
+    .lecturer-photo-wrap {
+        position: relative;
+        padding-bottom: 20px;
+    }
+
+    .lecturer-img {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+        border-radius: 4px;
+        box-shadow: 20px 20px 0px rgba(0,0,0,0.05);
+    }
+
+    .lecturer-name {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.5rem;
+        line-height: 1.1;
+        margin-bottom: 20px;
+    }
+
+    .lecturer-role {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #777;
+        margin-bottom: 30px;
+        display: block;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 20px;
+        width: fit-content;
+    }
+
+    .lecturer-bio {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        color: #444;
+        margin-bottom: 40px;
+        white-space: pre-line; /* Сохраняет абзацы из БД */
+    }
+
+    /* --- ВИДЕО --- */
+    .video-section {
+        margin-top: 60px;
+        background: white;
+        padding: 40px;
+        border: 1px solid #eee;
+    }
+
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+
+    /* --- КАРТОЧКИ СОБЫТИЙ (Мини-версия) --- */
+    .event-mini-card {
+        background: white;
+        border: 1px solid #eee;
+        padding: 20px;
+        transition: 0.3s;
+        height: 100%;
+    }
+
+        .event-mini-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+    .event-date {
+        color: var(--accent-red);
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+
+    .event-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.2rem;
+        color: var(--text-dark);
+        text-decoration: none;
+        display: block;
+        margin-bottom: 15px;
+    }
+</style>
+
+<div class="container py-5">
+
+    <!-- Хлебные крошки -->
+    <nav aria-label="breadcrumb" class="mb-5">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/" class="text-decoration-none text-muted">Главная</a></li>
+            <li class="breadcrumb-item"><a href="/Lecturers" class="text-decoration-none text-muted">Лекторы</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Lecturer.FullName</li>
+        </ol>
+    </nav>
+
+    <div class="row gx-lg-5">
+        <!-- ФОТО (Слева) -->
+        <div class="col-lg-5 mb-5 mb-lg-0">
+            <div class="lecturer-photo-wrap">
+                <!-- Если фото нет, ставим заглушку -->
+                <img src="@(string.IsNullOrEmpty(Model.Lecturer.PhotoUrl) ? "https://via.placeholder.com/500x600" : Model.Lecturer.PhotoUrl)"
+                     class="lecturer-img"
+                     alt="@Model.Lecturer.FullName">
+            </div>
+
+            <!-- Соцсети (опционально) -->
+            <div class="d-flex gap-3 mt-4 justify-content-center justify-content-lg-start">
+                <a href="#" class="text-dark fs-4"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="text-dark fs-4"><i class="bi bi-linkedin"></i></a>
+                <a href="#" class="text-dark fs-4"><i class="bi bi-facebook"></i></a>
+            </div>
+        </div>
+
+        <!-- ИНФОРМАЦИЯ (Справа) -->
+        <div class="col-lg-7">
+            <span class="lecturer-role">Спикер / Эксперт</span>
+            <h1 class="lecturer-name">@Model.Lecturer.FullName</h1>
+
+            <div class="lecturer-bio">
+                @Model.Lecturer.Bio
+                <!-- Заглушка, если описания нет -->
+                @if (string.IsNullOrEmpty(Model.Lecturer.Bio))
+                {
+                    <p>Опытный спикер с многолетним стажем в индустрии. Ведет лекции по актуальным темам, вдохновляет аудиторию и делится практическими кейсами.</p>
+                }
+            </div>
+
+            <!-- ВИДЕО -->
+            @if (!string.IsNullOrEmpty(Model.Lecturer.YoutubeLink))
+            {
+                var embedUrl = Model.GetEmbedUrl(Model.Lecturer.YoutubeLink);
+                if (embedUrl != null)
+                {
+                    <div class="video-section">
+                        <h3 class="section-title">Знакомство</h3>
+                        <div class="ratio ratio-16x9">
+                            <iframe src="@embedUrl" title="YouTube video" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <!-- БЛИЖАЙШИЕ СОБЫТИЯ ЭТОГО ЛЕКТОРА -->
+    @if (Model.UpcomingEvents.Any())
+    {
+        <div class="mt-5 pt-5 border-top">
+            <h3 class="section-title mb-4">Ближайшие события</h3>
+            <div class="row g-4">
+                @foreach (var evt in Model.UpcomingEvents)
+                {
+                    <div class="col-md-4">
+                        <div class="event-mini-card">
+                            <div class="event-date">@evt.StartDate.ToString("dd MMMM, HH:mm")</div>
+                            <a asp-page="/Events/Details" asp-route-id="@evt.Id" class="event-title">
+                                @evt.Title
+                            </a>
+                            <a asp-page="/Events/Details" asp-route-id="@evt.Id" class="btn btn-sm btn-outline-dark rounded-0">
+                                Подробнее
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

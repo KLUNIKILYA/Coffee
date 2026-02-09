@@ -8,7 +8,7 @@ namespace Coffee.Pages.Events
 {
     public class DetailsModel : PageModel
     {
-        private readonly ApplicationDbContext _context; 
+        private readonly ApplicationDbContext _context;
 
         public DetailsModel(ApplicationDbContext context)
         {
@@ -20,8 +20,8 @@ namespace Coffee.Pages.Events
         public async Task<IActionResult> OnGetAsync(int id)
         {
             Event = await _context.Events
-                                  //.Include(e => e.Lecturer) // Если есть связь с лектором
-                                  .FirstOrDefaultAsync(e => e.Id == id);
+                .Include(e => e.Lecturer)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (Event == null)
             {

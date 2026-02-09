@@ -1,9 +1,13 @@
 using Coffee.Core.Entities;
+using Coffee.Core.Interfaces;
 using Coffee.Data.Context;
+using Coffee.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<IFileService, FileService>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");

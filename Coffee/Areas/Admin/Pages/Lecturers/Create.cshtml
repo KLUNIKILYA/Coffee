@@ -2,39 +2,50 @@
 @model Coffee.Areas.Admin.Pages.Lecturers.CreateModel
 @{
     ViewData["Title"] = "Создать лектора";
-    // Layout = "/Pages/Shared/_Layout.cshtml";
 }
 
 <div class="container mt-4">
-    <h2>New Lecturers</h2>
+    <h2>Добавить лектора</h2>
     <hr />
     <div class="row">
         <div class="col-md-6">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
                 <div class="mb-3">
-                    <label asp-for="Lecturer.FullName" class="form-label">Full Name</label>
-                    <input asp-for="Lecturer.FullName" class="form-control" />
+                    <label asp-for="Lecturer.FullName" class="form-label">Имя</label>
+                    <input asp-for="Lecturer.FullName" class="form-control bg-dark text-white" />
                     <span asp-validation-for="Lecturer.FullName" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Lecturer.Bio" class="form-label">Bio</label>
-                    <textarea asp-for="Lecturer.Bio" class="form-control" rows="3"></textarea>
+                    <label asp-for="Lecturer.Bio" class="form-label">Описание</label>
+                    <textarea asp-for="Lecturer.Bio" class="form-control bg-dark text-white" rows="4"></textarea>
+                    <span asp-validation-for="Lecturer.Bio" class="text-danger bg-dark text-white"></span>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Lecturer.PhotoUrl" class="form-label">PhotoUrl</label>
-                    <textarea asp-for="Lecturer.PhotoUrl" class="form-control" rows="3"></textarea>
+                    <label class="form-label">Фотография</label>
+                    <!-- type="file" и привязка к UploadedPhoto -->
+                    <input type="file" asp-for="UploadedPhoto" class="form-control bg-dark text-white" accept="image/*" />
+                    <div class="form-text">Поддерживаются форматы jpg, png, webp.</div>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Lecturer.YoutubeLink" class="form-label">YoutubeLink</label>
-                    <textarea asp-for="Lecturer.YoutubeLink" class="form-control" rows="3"></textarea>
+                    <label asp-for="Lecturer.YoutubeLink" class="form-label">Ссылка на YouTube</label>
+                    <input asp-for="Lecturer.YoutubeLink" class="form-control bg-dark text-white" placeholder="https://youtube.com/..." />
+                    <span asp-validation-for="Lecturer.YoutubeLink" class="text-danger"></span>
                 </div>
 
-                <button type="submit" class="btn btn-success">Сохранить</button>
-                <a href="/" class="btn btn-secondary">Отмена</a>
+                <button type="submit" class="btn btn-success mt-3">Сохранить</button>
+                <a href="/" class="btn btn-secondary mt-3">Отмена</a>
             </form>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

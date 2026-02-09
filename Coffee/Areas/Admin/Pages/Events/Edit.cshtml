@@ -1,4 +1,65 @@
-﻿@page
+﻿@page "{id:int}"
 @model Coffee.Areas.Admin.Pages.Events.EditModel
 @{
+    ViewData["Title"] = "Редактировать событие";
+}
+
+<div class="container mt-4">
+    <h2 class="text-white">Редактировать событие</h2>
+    <hr class="border-secondary" />
+
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post" class="text-white">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <input type="hidden" asp-for="Event.Id" />
+
+                <div class="mb-3">
+                    <label asp-for="Event.Title" class="form-label">Название</label>
+                    <input asp-for="Event.Title" class="form-control bg-dark text-white border-secondary" />
+                    <span asp-validation-for="Event.Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Event.Description" class="form-label">Описание</label>
+                    <textarea asp-for="Event.Description" class="form-control bg-dark text-white border-secondary" rows="4"></textarea>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label asp-for="Event.StartDate" class="form-label">Дата и время</label>
+                        <input asp-for="Event.StartDate" class="form-control bg-dark text-white border-secondary" />
+                    </div>
+                    <div class="col-6">
+                        <label asp-for="Event.Price" class="form-label">Цена</label>
+                        <input asp-for="Event.Price" class="form-control bg-dark text-white border-secondary" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label asp-for="Event.Capacity" class="form-label">Вместимость</label>
+                        <input asp-for="Event.Capacity" class="form-control bg-dark text-white border-secondary" />
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label">Лектор</label>
+                        <select asp-for="Event.LecturerId" class="form-select bg-dark text-white border-secondary" asp-items="Model.LecturerSl">
+                            <option value="">-- Выберите лектора --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary px-4">Сохранить</button>
+                    <a asp-page="./Index" class="btn btn-outline-light ms-2">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

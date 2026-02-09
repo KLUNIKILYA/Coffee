@@ -3,7 +3,6 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<!-- Небольшие стили специально для этого меню, чтобы переопределить белый фон Bootstrap -->
 <style>
     .dropdown-menu-dark-custom {
         background-color: #1f1f1f;
@@ -15,11 +14,11 @@
         }
 
             .dropdown-menu-dark-custom .dropdown-item:hover {
-                background-color: #333; /* Чуть светлее фон при наведении */
+                background-color: #333;
                 color: #fff;
             }
             .dropdown-menu-dark-custom .dropdown-item.text-danger:hover {
-                background-color: rgba(220, 53, 69, 0.2); /* Красная подсветка */
+                background-color: rgba(220, 53, 69, 0.2);
                 color: #ff6b6b;
             }
 </style>

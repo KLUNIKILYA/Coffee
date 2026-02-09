@@ -1,0 +1,60 @@
+﻿@page "{id:int}"
+@model Coffee.Areas.Admin.Pages.Lecturers.EditModel
+@{
+    ViewData["Title"] = "Редактировать лектора";
+}
+
+<div class="container mt-4">
+    <h2 class="text-white">Редактировать лектора</h2>
+    <hr class="border-secondary" />
+
+    <div class="row">
+        <div class="col-md-8">
+            <form method="post" enctype="multipart/form-data" class="text-white">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <!-- Скрытый ID обязательно -->
+                <input type="hidden" asp-for="Lecturer.Id" />
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Lecturer.FullName" class="form-label">Имя</label>
+                        <input asp-for="Lecturer.FullName" class="form-control bg-dark text-white border-secondary" />
+                        <span asp-validation-for="Lecturer.FullName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Lecturer.Bio" class="form-label">Описание</label>
+                    <textarea asp-for="Lecturer.Bio" class="form-control bg-dark text-white border-secondary" rows="5"></textarea>
+                </div>
+
+                <div class="mb-3 p-3 border border-secondary rounded bg-dark">
+                    <label class="form-label">Текущее фото:</label>
+                    <div class="mb-2">
+                        <img src="@Model.Lecturer.PhotoUrl" alt="Current" style="height: 100px; border-radius: 8px;" />
+                    </div>
+
+                    <label class="form-label mt-2">Заменить фото (необязательно)</label>
+                    <input type="file" asp-for="UploadedPhoto" class="form-control bg-secondary text-white border-0" accept="image/*" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Lecturer.YoutubeLink" class="form-label">Ссылка на YouTube</label>
+                    <input asp-for="Lecturer.YoutubeLink" class="form-control bg-dark text-white border-secondary" />
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary px-4">Сохранить изменения</button>
+                    <a asp-page="./Index" class="btn btn-outline-light ms-2">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

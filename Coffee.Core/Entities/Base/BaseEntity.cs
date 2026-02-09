@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Coffee.Core.Entities.Base
 {
-    internal class BaseEntity
+    public class BaseEntity
     {
+        public int Id { get; set; }
+        public bool IsDeleted { get; set; } = false;
     }
 }

@@ -1,0 +1,344 @@
+﻿@page
+@model Coffee.Pages.Rent.IndexModel
+@{
+    ViewData["Title"] = "Аренда пространства";
+}
+
+<!-- Подключаем те же шрифты -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --bg-beige: #f9f7f2;
+        --text-dark: #2c2c2c;
+        --accent-red: #e74c3c;
+    }
+
+    body {
+        background-color: var(--bg-beige);
+        color: var(--text-dark);
+        font-family: 'Manrope', sans-serif;
+    }
+
+    h1, h2, h3 {
+        font-family: 'Playfair Display', serif;
+    }
+
+    /* --- HERO СЕКЦИЯ --- */
+    .hero-rent {
+        padding: 80px 0 60px;
+        position: relative;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        line-height: 1.1;
+        margin-bottom: 2rem;
+    }
+
+    .hero-desc {
+        font-size: 1.1rem;
+        color: #555;
+        max-width: 500px;
+        margin-bottom: 2rem;
+    }
+
+    /* --- ХАРАКТЕРИСТИКИ (ИКОНКИ) --- */
+    .feature-box {
+        background: white;
+        padding: 30px;
+        border-radius: 2px; /* Чуть строже */
+        height: 100%;
+        transition: 0.3s;
+        border: 1px solid transparent;
+    }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-color: #eee;
+        }
+
+    .feature-icon {
+        font-size: 2rem;
+        color: var(--text-dark);
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    /* --- ПРАЙС --- */
+    .price-card {
+        border: 1px solid #e0e0e0;
+        padding: 40px 30px;
+        background: white;
+        position: relative;
+        transition: 0.3s;
+    }
+
+        .price-card:hover {
+            border-color: var(--text-dark);
+            transform: scale(1.02);
+        }
+
+    .price-amount {
+        font-size: 2.5rem;
+        font-family: 'Playfair Display', serif;
+        font-weight: 600;
+        margin: 20px 0;
+    }
+
+    .price-list li {
+        margin-bottom: 10px;
+        color: #555;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .price-list li i {
+            color: var(--accent-red);
+            font-size: 1.2rem;
+        }
+
+    /* --- ФОРМА --- */
+    .rent-form {
+        background: white;
+        padding: 50px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    }
+
+    .form-control {
+        border: none;
+        border-bottom: 1px solid #ccc;
+        border-radius: 0;
+        padding: 15px 0;
+        background: transparent;
+    }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: var(--text-dark);
+            background: transparent;
+        }
+
+    .btn-submit {
+        background: var(--text-dark);
+        color: white;
+        padding: 15px 40px;
+        border: none;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 0.9rem;
+        transition: 0.3s;
+        margin-top: 20px;
+    }
+
+        .btn-submit:hover {
+            background: var(--accent-red);
+            color: white;
+        }
+
+    /* Галерея */
+    .gallery-img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        margin-bottom: 24px;
+        filter: grayscale(20%);
+        transition: 0.5s;
+    }
+
+        .gallery-img:hover {
+            filter: grayscale(0%);
+        }
+
+</style>
+
+<!-- Сообщение об успехе -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success text-center rounded-0 border-0" style="background-color: #d4edda; color: #155724;">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<div class="container hero-rent">
+    <div class="row align-items-center">
+        <div class="col-lg-6">
+            <h1 class="hero-title">Пространство<br>для ваших идей</h1>
+            <p class="hero-desc">
+                Светлый лофт в центре города для проведения лекций, воркшопов,
+                мастер-классов и камерных мероприятий.
+                Мы создали атмосферу, в которой хочется творить.
+            </p>
+            <div class="d-flex gap-4 mb-4" style="font-family: 'Playfair Display';">
+                <div>
+                    <span style="font-size: 2rem; display:block;">80 м²</span>
+                    <span class="text-muted text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.1em;">Площадь</span>
+                </div>
+                <div>
+                    <span style="font-size: 2rem; display:block;">до 50</span>
+                    <span class="text-muted text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.1em;">Человек</span>
+                </div>
+                <div>
+                    <span style="font-size: 2rem; display:block;">24/7</span>
+                    <span class="text-muted text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.1em;">Доступ</span>
+                </div>
+            </div>
+            <a href="#bookingForm" class="btn-submit text-decoration-none">Забронировать</a>
+        </div>
+        <div class="col-lg-6">
+            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200" class="img-fluid" alt="Интерьер">
+        </div>
+    </div>
+</div>
+
+<!-- БЛОК "ЧТО ЕСТЬ ВНУТРИ" -->
+<div class="container py-5">
+    <h2 class="text-center mb-5">Оборудование и удобства</h2>
+    <div class="row g-4">
+        <div class="col-md-3 col-6">
+            <div class="feature-box text-center">
+                <i class="bi bi-projector feature-icon"></i>
+                <h5>Проектор 4K</h5>
+                <p class="text-muted small">Экран 3x2 метра</p>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="feature-box text-center">
+                <i class="bi bi-soundwave feature-icon"></i>
+                <h5>Звук JBL</h5>
+                <p class="text-muted small">Микрофоны и пульт</p>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="feature-box text-center">
+                <i class="bi bi-wifi feature-icon"></i>
+                <h5>Wi-Fi 6</h5>
+                <p class="text-muted small">Стабильные 500 Мбит/с</p>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="feature-box text-center">
+                <i class="bi bi-cup-hot feature-icon"></i>
+                <h5>Кофе-поинт</h5>
+                <p class="text-muted small">Чай, вода, печенье</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ГАЛЕРЕЯ -->
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?q=80&w=600" class="gallery-img" alt="Фото 1">
+        </div>
+        <div class="col-md-4">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600" class="gallery-img" alt="Фото 2">
+        </div>
+        <div class="col-md-4">
+            <img src="https://images.unsplash.com/photo-1600508774634-4e11d34730e2?q=80&w=600" class="gallery-img" alt="Фото 3">
+        </div>
+    </div>
+</div>
+
+<!-- ЦЕНЫ -->
+<div class="container py-5">
+    <h2 class="text-center mb-5">Тарифы</h2>
+    <div class="row justify-content-center g-4">
+        <!-- Почасовой -->
+        <div class="col-md-4">
+            <div class="price-card">
+                <h4 class="text-uppercase text-muted" style="font-size: 0.9rem; letter-spacing: 0.1em;">Почасовой</h4>
+                <div class="price-amount">100 BYN <span style="font-size: 1rem; color: #999;">/ час</span></div>
+                <ul class="price-list p-0">
+                    <li><i class="bi bi-check2"></i> До 20 человек</li>
+                    <li><i class="bi bi-check2"></i> Проектор и флипчарт</li>
+                    <li><i class="bi bi-check2"></i> Чай / Вода</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- День -->
+        <div class="col-md-4">
+            <div class="price-card" style="border-color: var(--text-dark); transform: scale(1.05);">
+                <div style="position: absolute; top:0; right:0; background: var(--text-dark); color: white; padding: 5px 15px; font-size: 0.8rem;">POPULAR</div>
+                <h4 class="text-uppercase text-muted" style="font-size: 0.9rem; letter-spacing: 0.1em;">Весь день</h4>
+                <div class="price-amount">800 BYN <span style="font-size: 1rem; color: #999;">/ 10 часов</span></div>
+                <ul class="price-list p-0">
+                    <li><i class="bi bi-check2"></i> До 50 человек</li>
+                    <li><i class="bi bi-check2"></i> Все оборудование</li>
+                    <li><i class="bi bi-check2"></i> Помощь администратора</li>
+                    <li><i class="bi bi-check2"></i> Кофе-брейк (базовый)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Вечер -->
+        <div class="col-md-4">
+            <div class="price-card">
+                <h4 class="text-uppercase text-muted" style="font-size: 0.9rem; letter-spacing: 0.1em;">Вечерний</h4>
+                <div class="price-amount">450 BYN <span style="font-size: 1rem; color: #999;">/ 4 часа</span></div>
+                <ul class="price-list p-0">
+                    <li><i class="bi bi-check2"></i> Идеально для лекций</li>
+                    <li><i class="bi bi-check2"></i> 18:00 - 22:00</li>
+                    <li><i class="bi bi-check2"></i> Клининг включен</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ФОРМА БРОНИРОВАНИЯ -->
+<div class="container py-5 mb-5" id="bookingForm">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="rent-form">
+                <h2 class="mb-4 text-center">Оставить заявку</h2>
+                <p class="text-center text-muted mb-5">Заполните форму, и мы свяжемся с вами для уточнения деталей.</p>
+
+                <form method="post">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label>Ваше имя</label>
+                            <input asp-for="Input.Name" class="form-control" placeholder="Иван Иванов">
+                            <span asp-validation-for="Input.Name" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Телефон</label>
+                            <input asp-for="Input.Phone" class="form-control" placeholder="+375 (XX) XXX-XX-XX">
+                            <span asp-validation-for="Input.Phone" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Дата мероприятия</label>
+                            <input asp-for="Input.Date" type="date" class="form-control">
+                            <span asp-validation-for="Input.Date" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Тип мероприятия</label>
+                            <select asp-for="Input.EventType" class="form-control">
+                                <option>Лекция / Мастер-класс</option>
+                                <option>Корпоратив</option>
+                                <option>Фотосессия</option>
+                                <option>Другое</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label>Комментарий (кол-во людей, пожелания)</label>
+                            <textarea asp-for="Input.Comment" class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn-submit">Отправить заявку</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -22,16 +22,16 @@ namespace Coffee.Pages
             UpcomingEvents = await _context.Events
                 .Where(e => e.StartDate >= DateTime.Now)
                 .OrderBy(e => e.StartDate)
-                .Take(5)
+                .Take(3)
                 .ToListAsync();
 
             TopLecturers = await _context.Lecturers
+                .Where(l => !l.IsDeleted)
                 .Take(6)
                 .ToListAsync();
         }
 
 
-        // Внутренний класс для View (можно вынести в папку ViewModels)
         public class EventViewModel
         {
             public int Id { get; set; }
@@ -45,7 +45,6 @@ namespace Coffee.Pages
             public int PlacesLeft => Capacity - PlacesTaken;
             public int FillPercentage => Capacity > 0 ? (int)((double)PlacesTaken / Capacity * 100) : 100;
 
-            // Логика статуса
             public (string Text, string ColorClass) Status
             {
                 get
