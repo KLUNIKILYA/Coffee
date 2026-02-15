@@ -1,4 +1,165 @@
 ﻿@page
 @model Coffee.Pages.Cabinet.WaitlistModel
 @{
+    ViewData["Title"] = "Лист ожидания";
 }
+
+<style>
+    /* --- СТИЛЬ КАРТОЧКИ ОЖИДАНИЯ --- */
+    .waitlist-card {
+        background: white;
+        border: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        margin-bottom: 20px;
+        transition: 0.3s;
+        border-radius: 4px; /* Легкое скругление */
+    }
+
+        .waitlist-card:hover {
+            border-color: var(--color-black);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+    /* Картинка */
+    .wait-thumb {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        margin-right: 20px;
+        filter: grayscale(20%);
+    }
+
+    /* Информация */
+    .wait-info {
+        flex-grow: 1;
+    }
+
+    .wait-title {
+        font-family: 'Oswald', sans-serif;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        color: var(--color-black);
+        margin-bottom: 5px;
+        text-decoration: none;
+        display: block;
+    }
+
+        .wait-title:hover {
+            color: var(--color-gold);
+        }
+
+    .wait-meta {
+        font-size: 0.85rem;
+        color: #777;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .wait-lecturer {
+        font-weight: 600;
+        color: #333;
+    }
+
+    /* Статус (справа) */
+    .wait-status {
+        text-align: right;
+        min-width: 140px;
+        padding-left: 20px;
+        border-left: 1px solid #eee;
+    }
+
+    .status-badge {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        background: #f4f4f4;
+        padding: 5px 10px;
+        border-radius: 20px;
+        color: #555;
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+
+    /* Кнопка удаления */
+    .btn-remove {
+        background: none;
+        border: none;
+        color: #999;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        transition: 0.3s;
+        padding: 0;
+    }
+
+        .btn-remove:hover {
+            color: #e74c3c; /* Красный */
+            text-decoration: underline;
+        }
+
+    /* Пустое состояние */
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        opacity: 0.6;
+    }
+</style>
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-end mb-5">
+        <h1 style="font-family: 'Oswald', sans-serif; text-transform: uppercase;">Лист ожидания</h1>
+        <div class="text-muted small">ВЫ ПОДПИСАНЫ НА @Model.WaitlistItems.Count СОБЫТИЙ</div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+
+            @if (Model.WaitlistItems.Any())
+            {
+                @foreach (var item in Model.WaitlistItems)
+                {
+                    <div class="waitlist-card">
+                        <!-- Фото -->
+                        <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? "https://via.placeholder.com/150" : item.ImageUrl)"
+                             class="wait-thumb"
+                             alt="Event">
+
+                        <!-- Инфо -->
+                        <div class="wait-info">
+                            <a asp-page="/Events/Details" asp-route-id="@item.EventId" class="wait-title">
+                                @item.EventTitle
+                            </a>
+                            <div class="wait-meta">
+                                <span class="wait-lecturer">@item.LecturerName</span>
+                                <span class="mx-2">|</span>
+                                <span><i class="bi bi-calendar4"></i> @item.StartDate.ToString("dd MMMM, HH:mm")</span>
+                            </div>
+                        </div>
+
+                        <div class="wait-status">
+                            <span class="status-badge"><i class="bi bi-bell-fill text-warning me-1"></i> Ожидание</span>
+
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@item.Id">
+                                <button type="submit" class="btn-remove">
+                                    <i class="bi bi-x-lg"></i> Удалить
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="empty-state">
+                    <i class="bi bi-hourglass" style="font-size: 3rem; margin-bottom: 20px; display:block;"></i>
+                    <h4 style="font-family:'Oswald', sans-serif;">Список пуст</h4>
+                    <p>Вы пока не подписались ни на одно событие.</p>
+                    <a href="/Events/Index" class="btn btn-outline-dark rounded-0 text-uppercase mt-3">Перейти к афише</a>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

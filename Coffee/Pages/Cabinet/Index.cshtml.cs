@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Coffee.Pages.Cabinet
 {
-    [Authorize]
+    [Authorize] 
     public class IndexModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -16,16 +16,32 @@ namespace Coffee.Pages.Cabinet
             _userManager = userManager;
         }
 
-        public string Username { get; set; }
+        public ApplicationUser CurrentUser { get; set; } = default!;
+        public string Initials { get; set; } = "U";
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user != null)
+            CurrentUser = await _userManager.GetUserAsync(User);
+
+            if (CurrentUser == null)
             {
-                Username = user.UserName;
-                // Тут можно подгрузить билеты пользователя
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
             }
+
+            if (!string.IsNullOrEmpty(CurrentUser.FirstName))
+            {
+                Initials = CurrentUser.FirstName[0].ToString().ToUpper();
+                if (!string.IsNullOrEmpty(CurrentUser.LastName))
+                {
+                    Initials += CurrentUser.LastName[0].ToString().ToUpper();
+                }
+            }
+            else
+            {
+                Initials = CurrentUser.Email?[0].ToString().ToUpper() ?? "U";
+            }
+
+            return Page();
         }
     }
 }

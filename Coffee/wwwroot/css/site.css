@@ -409,3 +409,134 @@ h1, h2, h3, h4, h5, .serif-font {
     margin: 0 auto 20px auto;
     border: 3px solid var(--bg-beige);
 }
+
+/*Cabinet*/
+
+/* --- НОВЫЙ СТИЛЬ: PREMIUM CLUB --- */
+body {
+    background-color: #f8f9fa; /* Очень светло-серый, почти белый */
+}
+
+/* Клубная карта */
+.member-card {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+    border-radius: 16px;
+    padding: 30px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+    /* Декор на карте (золотые круги) */
+    .member-card::after {
+        content: '';
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, rgba(198, 168, 124, 0.2) 0%, rgba(255,255,255,0) 70%);
+        border-radius: 50%;
+    }
+
+.card-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    opacity: 0.6;
+    margin-bottom: 5px;
+}
+
+.user-name-premium {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #c6a87c; /* Золото */
+    margin-bottom: 0;
+}
+
+.card-number {
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.2em;
+    font-size: 1.1rem;
+    opacity: 0.8;
+    margin-top: auto;
+}
+
+/* Меню навигации (Список) */
+.menu-list {
+    background: white;
+    border-radius: 16px;
+    padding: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+    border: 1px solid #eee;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: 0.2s;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+    .menu-item:hover {
+        background-color: #f4f4f4;
+        color: #000;
+    }
+
+.menu-icon-box {
+    width: 40px;
+    height: 40px;
+    background-color: #f9f7f2;
+    color: #c6a87c;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 1.2rem;
+}
+
+.menu-item:hover .menu-icon-box {
+    background-color: #c6a87c;
+    color: white;
+}
+
+/* Статистика (маленькие карточки) */
+.stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #eee;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.stat-number {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.5rem;
+    color: #2c2c2c;
+    line-height: 1;
+}
+
+.stat-text {
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 5px;
+}

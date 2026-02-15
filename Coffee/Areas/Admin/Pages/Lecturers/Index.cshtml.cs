@@ -1,45 +1,39 @@
-using Coffee.Core.Entities;
-using Coffee.Core.Interfaces; // Добавь этот using
-using Coffee.Data.Context;
+using Coffee.Core.Interfaces;
+using Coffee.Core.Interfaces.Lecturer;
+using Coffee.ViewModels.LecturerVm;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace Coffee.Areas.Admin.Pages.Lecturers
 {
     public class IndexModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
         private readonly IFileService _fileService;
+        private readonly ILecturerService _lecturerService;
 
-        public IndexModel(ApplicationDbContext context, IFileService fileService)
+        public IndexModel(IFileService fileService, ILecturerService lecturerService)
         {
-            _context = context;
             _fileService = fileService;
+            _lecturerService = lecturerService;
         }
 
-        public IList<Lecturer> Lecturers { get; set; } = default!;
+        public IList<LecturerIndexVM> Lecturers { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Lecturers = await _context.Lecturers.Where(l => !l.IsDeleted).ToListAsync();
+            var dto = await _lecturerService.GetDtosAsync();
+            Lecturers = dto.Select(x => new LecturerIndexVM
+            {
+                Id = x.Id,
+                Bio = x.Bio,
+                FullName = x.FullName,
+                PhotoUrl = x.ImageUrl,
+            }).ToList();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
-            var lecturer = await _context.Lecturers.FindAsync(id);
-
-            if (lecturer != null)
-            {
-                if (!string.IsNullOrEmpty(lecturer.PhotoUrl))
-                {
-                    _fileService.DeleteFile(lecturer.PhotoUrl);
-                }
-
-                lecturer.IsDeleted = true;
-                await _context.SaveChangesAsync();
-            }
-
+            await _lecturerService.DeleteLecturerAsync(id);
             return RedirectToPage();
         }
     }

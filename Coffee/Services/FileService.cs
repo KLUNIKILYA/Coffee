@@ -13,7 +13,6 @@ namespace Coffee.Services
 
         public async Task<string> SaveFileAsync(IFormFile file, string folderName)
         {
-            // 1. Создаем папку, если её нет (например, wwwroot/uploads/lecturers)
             var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads", folderName);
             if (!Directory.Exists(uploadsFolder))
             {

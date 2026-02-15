@@ -14,34 +14,29 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                 <!-- Скрытый ID обязательно -->
-                <input type="hidden" asp-for="Lecturer.Id" />
+                <input type="hidden" asp-for="Input.Id" />
 
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label asp-for="Lecturer.FullName" class="form-label">Имя</label>
-                        <input asp-for="Lecturer.FullName" class="form-control bg-dark text-white border-secondary" />
-                        <span asp-validation-for="Lecturer.FullName" class="text-danger"></span>
+                        <label asp-for="Input.FullName" class="form-label">Имя</label>
+                        <input asp-for="Input.FullName" class="form-control bg-dark text-white border-secondary" />
+                        <span asp-validation-for="Input.FullName" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Lecturer.Bio" class="form-label">Описание</label>
-                    <textarea asp-for="Lecturer.Bio" class="form-control bg-dark text-white border-secondary" rows="5"></textarea>
+                    <label asp-for="Input.Bio" class="form-label">Описание</label>
+                    <textarea asp-for="Input.Bio" class="form-control bg-dark text-white border-secondary" rows="5"></textarea>
                 </div>
 
                 <div class="mb-3 p-3 border border-secondary rounded bg-dark">
-                    <label class="form-label">Текущее фото:</label>
-                    <div class="mb-2">
-                        <img src="@Model.Lecturer.PhotoUrl" alt="Current" style="height: 100px; border-radius: 8px;" />
-                    </div>
-
                     <label class="form-label mt-2">Заменить фото (необязательно)</label>
-                    <input type="file" asp-for="UploadedPhoto" class="form-control bg-secondary text-white border-0" accept="image/*" />
+                    <input type="file" asp-for="Input.UploadedPhoto" class="form-control bg-secondary text-white border-0" accept="image/*" />
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Lecturer.YoutubeLink" class="form-label">Ссылка на YouTube</label>
-                    <input asp-for="Lecturer.YoutubeLink" class="form-control bg-dark text-white border-secondary" />
+                    <label asp-for="Input.YoutubeLink" class="form-label">Ссылка на YouTube</label>
+                    <input asp-for="Input.YoutubeLink" class="form-control bg-dark text-white border-secondary" />
                 </div>
 
                 <div class="mt-4">

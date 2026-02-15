@@ -39,6 +39,9 @@ namespace Coffee.Data.Context
                 .WithMany(e => e.WaitlistEntries)
                 .HasForeignKey(w => w.EventId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Event>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<Lecturer>().HasQueryFilter(l => !l.IsDeleted);
         }
     }
 }

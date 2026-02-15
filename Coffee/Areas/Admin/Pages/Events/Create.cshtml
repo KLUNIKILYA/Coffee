@@ -9,60 +9,50 @@
     <hr class="border-secondary" />
     <div class="row">
         <div class="col-md-8">
-            <!-- Чуть расширил колонку -->
-            <!-- ВАЖНО: enctype нужен для отправки файлов -->
             <form method="post" enctype="multipart/form-data" class="text-white">
 
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-                <!-- Заголовок -->
                 <div class="mb-3">
-                    <label asp-for="Event.Title" class="form-label">Название</label>
-                    <input asp-for="Event.Title" class="form-control bg-dark text-white border-secondary" placeholder="Например: Лекция о кофе" />
-                    <span asp-validation-for="Event.Title" class="text-danger"></span>
+                    <label asp-for="Input.Title" class="form-label">Название</label>
+                    <input asp-for="Input.Title" class="form-control bg-dark text-white border-secondary" placeholder="Например: Лекция о кофе" />
+                    <span asp-validation-for="Input.Title" class="text-danger"></span>
                 </div>
-
-                <!-- Описание -->
                 <div class="mb-3">
-                    <label asp-for="Event.Description" class="form-label">Описание</label>
-                    <textarea asp-for="Event.Description" class="form-control bg-dark text-white border-secondary" rows="4"></textarea>
-                    <span asp-validation-for="Event.Description" class="text-danger"></span>
+                    <label asp-for="Input.Description" class="form-label">Описание</label>
+                    <textarea asp-for="Input.Description" class="form-control bg-dark text-white border-secondary" rows="4"></textarea>
+                    <span asp-validation-for="Input.Description" class="text-danger"></span>
                 </div>
-
-                <!-- ЗАГРУЗКА ОБЛОЖКИ -->
                 <div class="mb-3 p-3 border border-secondary rounded bg-dark">
                     <label class="form-label text-warning">Обложка мероприятия</label>
-                    <input type="file" asp-for="UploadedCover" class="form-control bg-secondary text-white border-0" accept="image/*" />
+                    <input type="file" asp-for="Input.UploadedCover" class="form-control bg-secondary text-white border-0" accept="image/*" />
                     <div class="form-text text-muted">Рекомендуемый размер: 600x400 px. Форматы: jpg, png, webp.</div>
                 </div>
 
-                <!-- Дата и Цена -->
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label asp-for="Event.StartDate" class="form-label">Дата и время</label>
-                        <input asp-for="Event.StartDate" class="form-control bg-dark text-white border-secondary" />
-                        <span asp-validation-for="Event.StartDate" class="text-danger"></span>
+                        <label asp-for="Input.StartDate" class="form-label">Дата и время</label>
+                        <input asp-for="Input.StartDate" class="form-control bg-dark text-white border-secondary" />
+                        <span asp-validation-for="Input.StartDate" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
-                        <label asp-for="Event.Price" class="form-label">Цена (₽)</label>
-                        <input asp-for="Event.Price" type="number" class="form-control bg-dark text-white border-secondary" />
-                        <span asp-validation-for="Event.Price" class="text-danger"></span>
+                        <label asp-for="Input.Price" class="form-label">Цена (₽)</label>
+                        <input asp-for="Input.Price" type="number" class="form-control bg-dark text-white border-secondary" />
+                        <span asp-validation-for="Input.Price" class="text-danger"></span>
                     </div>
                 </div>
-
-                <!-- Вместимость и Лектор -->
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label asp-for="Event.Capacity" class="form-label">Вместимость (чел.)</label>
-                        <input asp-for="Event.Capacity" type="number" class="form-control bg-dark text-white border-secondary" />
-                        <span asp-validation-for="Event.Capacity" class="text-danger"></span>
+                        <label asp-for="Input.Capacity" class="form-label">Вместимость (чел.)</label>
+                        <input asp-for="Input.Capacity" type="number" class="form-control bg-dark text-white border-secondary" />
+                        <span asp-validation-for="Input.Capacity" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Лектор</label>
-                        <select asp-for="Event.LecturerId" class="form-select bg-dark text-white border-secondary" asp-items="Model.LecturerSl">
+                        <select asp-for="Input.LecturerId" class="form-select bg-dark text-white border-secondary" asp-items="Model.LecturerSl">
                             <option value="">-- Выберите лектора --</option>
                         </select>
-                        <span asp-validation-for="Event.LecturerId" class="text-danger"></span>
+                        <span asp-validation-for="Input.LecturerId" class="text-danger"></span>
                     </div>
                 </div>
 

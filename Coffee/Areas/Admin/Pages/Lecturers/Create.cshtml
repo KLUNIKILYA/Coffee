@@ -13,28 +13,27 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                 <div class="mb-3">
-                    <label asp-for="Lecturer.FullName" class="form-label">Имя</label>
-                    <input asp-for="Lecturer.FullName" class="form-control bg-dark text-white" />
-                    <span asp-validation-for="Lecturer.FullName" class="text-danger"></span>
+                    <label asp-for="Input.FullName" class="form-label">Имя</label>
+                    <input asp-for="Input.FullName" class="form-control bg-dark text-white" />
+                    <span asp-validation-for="Input.FullName" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Lecturer.Bio" class="form-label">Описание</label>
-                    <textarea asp-for="Lecturer.Bio" class="form-control bg-dark text-white" rows="4"></textarea>
-                    <span asp-validation-for="Lecturer.Bio" class="text-danger bg-dark text-white"></span>
+                    <label asp-for="Input.Bio" class="form-label">Описание</label>
+                    <textarea asp-for="Input.Bio" class="form-control bg-dark text-white" rows="4"></textarea>
+                    <span asp-validation-for="Input.Bio" class="text-danger bg-dark text-white"></span>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Фотография</label>
-                    <!-- type="file" и привязка к UploadedPhoto -->
-                    <input type="file" asp-for="UploadedPhoto" class="form-control bg-dark text-white" accept="image/*" />
+                    <input type="file" asp-for="Input.UploadedPhoto" class="form-control bg-dark text-white" accept="image/*" />
                     <div class="form-text">Поддерживаются форматы jpg, png, webp.</div>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Lecturer.YoutubeLink" class="form-label">Ссылка на YouTube</label>
-                    <input asp-for="Lecturer.YoutubeLink" class="form-control bg-dark text-white" placeholder="https://youtube.com/..." />
-                    <span asp-validation-for="Lecturer.YoutubeLink" class="text-danger"></span>
+                    <label asp-for="Input.YoutubeLink" class="form-label">Ссылка на YouTube</label>
+                    <input asp-for="Input.YoutubeLink" class="form-control bg-dark text-white" placeholder="https://youtube.com/..." />
+                    <span asp-validation-for="Input.YoutubeLink" class="text-danger"></span>
                 </div>
 
                 <button type="submit" class="btn btn-success mt-3">Сохранить</button>

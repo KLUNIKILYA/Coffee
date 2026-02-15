@@ -1,5 +1,9 @@
+using Coffee.Core.DTOs;
 using Coffee.Core.Entities;
-using Coffee.Data.Context;
+using Coffee.Core.Interfaces;
+using Coffee.Data.Repositories;
+using Coffee.Services;
+using Coffee.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering; 
@@ -9,15 +13,19 @@ namespace Coffee.Areas.Admin.Pages.Events
 {
     public class EditModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ILecturerRepository _lecturerRepository;
+        private readonly IFileService _fileService;
+        private readonly IEventService _eventService;
 
-        public EditModel(ApplicationDbContext context)
+        public EditModel(ILecturerRepository lecturerRepository, IFileService fileService, IEventService eventService)
         {
-            _context = context;
+            _lecturerRepository = lecturerRepository;
+            _fileService = fileService;
+            _eventService = eventService;
         }
 
         [BindProperty]
-        public Event Event { get; set; } = default!;
+        public EventEditVM Input { get; set; } = default!;
 
         public SelectList LecturerSl { get; set; }
 
@@ -25,14 +33,22 @@ namespace Coffee.Areas.Admin.Pages.Events
         {
             if (id == null) return NotFound();
 
-            Event = await _context.Events.FindAsync(id);
-            if (Event == null) return NotFound();
+            var eventInDb = await _eventService.GetEventForUpdateAsync(id.Value);
 
-            var lecturers = await _context.Lecturers
-                .Select(l => new { Id = l.Id, FullName = l.FullName })
-                .ToListAsync();
+            if (eventInDb == null) return NotFound();
 
-            LecturerSl = new SelectList(lecturers, "Id", "FullName");
+            Input = new EventEditVM
+            {
+                Id = eventInDb.Id,
+                Title = eventInDb.Title,
+                Description = eventInDb.Description,
+                StartDate = eventInDb.StartDate,
+                Price = eventInDb.Price,
+                Capacity = eventInDb.Capacity,
+                LecturerId = eventInDb.LecturerId,
+            };
+
+            await LoadLecturersAsync();
 
             return Page();
         }
@@ -41,26 +57,54 @@ namespace Coffee.Areas.Admin.Pages.Events
         {
             if (!ModelState.IsValid)
             {
-                var lecturers = await _context.Lecturers
-                     .Select(l => new { Id = l.Id, FullName = l.FullName })
-                     .ToListAsync();
-                LecturerSl = new SelectList(lecturers, "Id", "FullName");
+                await LoadLecturersAsync();
                 return Page();
             }
 
-            _context.Attach(Event).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_context.Events.Any(e => e.Id == Event.Id)) return NotFound();
-                else throw;
-            }
+                string? uploadedPath = null;
+                if (Input.NewUploadedCover != null)
+                {
+                    uploadedPath = await _fileService.SaveFileAsync(Input.NewUploadedCover, "events");
+                }
 
-            return RedirectToPage("./Index");
+                var dto = new EventUpdateDto
+                {
+                    Id = Input.Id,
+                    Title = Input.Title,
+                    Description = Input.Description,
+                    StartDate = Input.StartDate,
+                    Price = Input.Price,
+                    Capacity = Input.Capacity,
+                    LecturerId = Input.LecturerId,
+                    NewImageUrl = uploadedPath
+                };
+
+                await _eventService.UpdateEventAsync(dto);
+
+                return RedirectToPage("./Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "Ошибка при обновлении: " + ex.Message);
+                await LoadLecturersAsync();
+                return Page();
+            }
+        }
+
+        private async Task LoadLecturersAsync()
+        {
+            var lecturers = await _lecturerRepository.GetActiveLecturersAsync();
+
+            if (lecturers == null) lecturers = new List<Core.Entities.Lecturer>();
+
+            var items = lecturers.Select(l => new {
+                Id = l.Id,
+                Name = l.FullName,
+            });
+
+            LecturerSl = new SelectList(items, "Id", "Name");
         }
     }
 }

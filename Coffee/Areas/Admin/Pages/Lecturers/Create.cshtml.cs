@@ -1,6 +1,9 @@
+using Coffee.Core.DTOs.LecturersDTO;
 using Coffee.Core.Entities;
-using Coffee.Data.Context;
 using Coffee.Core.Interfaces;
+using Coffee.Core.Interfaces.Lecturer;
+using Coffee.Data.Context;
+using Coffee.ViewModels.LecturerVm;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -10,20 +13,17 @@ namespace Coffee.Areas.Admin.Pages.Lecturers
     [Area("Admin")]
     public class CreateModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
         private readonly IFileService _fileService;
+        private readonly ILecturerService _lecturerService;
 
-        public CreateModel(ApplicationDbContext context, IFileService fileService)
+        public CreateModel(ILecturerService lecturerService, IFileService fileService)
         {
-            _context = context;
             _fileService = fileService;
+            _lecturerService = lecturerService;
         }
 
         [BindProperty]
-        public Lecturer Lecturer { get; set; } = default!;
-
-        [BindProperty]
-        public IFormFile? UploadedPhoto { get; set; }
+        public LecturerCreateVM Input { get; set; } = default!;
 
         public IActionResult OnGet()
         {
@@ -32,26 +32,37 @@ namespace Coffee.Areas.Admin.Pages.Lecturers
 
         public async Task<IActionResult> OnPostAsync()
         {
-            ModelState.Remove("Lecturer.PhotoUrl");
-
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            if (UploadedPhoto != null)
+            try
             {
-                Lecturer.PhotoUrl = await _fileService.SaveFileAsync(UploadedPhoto, "lecturers");
+                string? photoPath = null;
+
+                if (Input.UploadedPhoto != null)
+                {
+                    photoPath = await _fileService.SaveFileAsync(Input.UploadedPhoto, "lecturers");
+                }
+
+                var dto = new LecturerCreateDto
+                {
+                    FullName = Input.FullName,
+                    Bio = Input.Bio,
+                    YoutubeLink = Input.YoutubeLink,
+                    PhotoUrl = photoPath
+                };
+
+                await _lecturerService.CreateLecturerAsync(dto);
+
+                return RedirectToPage("/Index", new { area = "" });
             }
-            else
+            catch (Exception ex)
             {
-                Lecturer.PhotoUrl = "https://via.placeholder.com/300";
+                ModelState.AddModelError(string.Empty, "Ошибка при создании лектора: " + ex.Message);
+                return Page();
             }
-
-            _context.Lecturers.Add(Lecturer);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("/Index", new { area = "" });
         }
     }
 }
