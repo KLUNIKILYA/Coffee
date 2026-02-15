@@ -17,278 +17,262 @@
 
     <style>
         :root {
-            --bg-dark: #1f1f1f; 
-            --bg-beige: #f9f7f2; 
-            --text-light: #ffffff;
-            --accent-gold: #c6a87c; 
+            --color-gold: #cfaa65;
+            --color-black: #111111;
+            --color-white: #ffffff;
+            --border-thick: 3px solid var(--color-black);
+            --border-thin: 1px solid var(--color-black);
         }
 
         body {
-            background-color: var(--bg-beige);
+            background-color: var(--color-white);
             font-family: 'Montserrat', sans-serif;
-            color: #2c2c2c;
+            color: var(--color-black);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
+        /* --- HEADER (INDUSTRIAL WHITE) --- */
         .site-header {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            padding-top: 20px;
+            background-color: var(--color-white);
+            color: var(--color-black);
+            border-bottom: var(--border-thick);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        .header-top {
+        .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* Логотип */
         .brand-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: var(--text-light);
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #111 !important; /* <--- ЧЕРНЫЙ ЦВЕТ ОБЯЗАТЕЛЬНО */
             text-decoration: none;
             letter-spacing: 0.05em;
             text-transform: uppercase;
+            line-height: 1;
+            border: 3px solid #111; /* Черная рамка */
+            padding: 5px 15px;
+            display: inline-block;
+            transition: 0.3s;
         }
 
             .brand-logo:hover {
-                color: var(--accent-gold);
-                text-decoration: none;
+                background: var(--color-black);
+                color: var(--color-white);
             }
 
-        .brand-subtitle {
-            font-size: 0.6rem;
-            text-align: center;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            color: #888;
-            margin-top: -5px;
-            display: block;
-        }
-
-        .social-links a {
-            color: #aaa;
-            margin-right: 15px;
-            font-size: 1.2rem;
-            transition: color 0.3s;
-        }
-
-            .social-links a:hover {
-                color: var(--accent-gold);
-            }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-            .header-actions a {
-                color: #fff;
-                text-decoration: none;
-                font-size: 0.9rem;
-            }
-
-        .header-nav {
-            padding: 15px 0;
-            display: flex;
-            justify-content: center;
-        }
-
+        /* Навигация */
         .nav-link-custom {
-            color: #ccc;
+            font-family: 'Oswald', sans-serif;
+            color: #111 !important; /* <--- ДОБАВЬ !important ЧТОБЫ БЫЛО ЧЕРНЫМ */
             text-decoration: none;
             text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 0.15em;
-            margin: 0 20px;
-            font-weight: 500;
-            transition: color 0.3s;
+            font-size: 0.9rem; /* Чуть уменьшил, а то было крупно */
+            letter-spacing: 0.1em;
+            margin-left: 30px;
+            font-weight: 600; /* Сделал жирнее */
+            transition: 0.3s;
+            position: relative;
         }
 
-            .nav-link-custom:hover, .nav-link-custom.active {
-                color: var(--text-light);
-                text-decoration: underline;
-                text-underline-offset: 5px;
-                text-decoration-color: var(--accent-gold);
+            .nav-link-custom::after {
+                content: '';
+                display: block;
+                width: 0;
+                height: 2px;
+                background: var(--color-black);
+                transition: width .3s;
+                position: absolute;
+                bottom: -5px;
             }
 
-        /* Dropdown для Админки */
-        .admin-dropdown .dropdown-menu {
-            background-color: var(--bg-dark);
-            border: 1px solid #333;
-        }
-
-        .admin-dropdown .dropdown-item {
-            color: #ccc;
-        }
-
-            .admin-dropdown .dropdown-item:hover {
-                background-color: #333;
-                color: white;
+            .nav-link-custom:hover::after, .nav-link-custom.active::after {
+                width: 100%;
             }
 
-        /* --- FOOTER STYLES --- */
+            .nav-link-custom:hover {
+                color: var(--color-black);
+            }
+
+        /* --- FOOTER (INDUSTRIAL BLACK) --- */
         .site-footer {
-            background-color: #1f1f1f; /* Темно-серый цвет (как в шапке) */
-            color: #b0b0b0; /* Светло-серый текст */
-            font-family: 'Manrope', sans-serif;
-            padding-top: 4rem;
-            padding-bottom: 2rem;
-            margin-top: auto; 
-            border-top: 1px solid #333; 
+            background-color: var(--color-black);
+            color: #ccc;
+            font-family: 'Montserrat', sans-serif;
+            padding-top: 60px;
+            padding-bottom: 30px;
+            margin-top: auto;
+            border-top: 5px solid var(--color-gold);
+        }
+
+        .footer-logo {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            color: var(--color-white);
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: inline-block;
+            border: 2px solid var(--color-white);
+            padding: 5px 15px;
         }
 
         .footer-title {
-            color: #ffffff; 
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
+            color: var(--color-gold);
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
             margin-bottom: 1.5rem;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
+            font-weight: 600;
         }
 
         .footer-link {
-            color: #b0b0b0;
+            color: #999;
             text-decoration: none;
             transition: 0.3s;
-            display: block; 
-            margin-bottom: 10px;
-            font-size: 0.95rem;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
             .footer-link:hover {
-                color: #c6a87c;
-                text-decoration: none;
+                color: var(--color-white);
                 padding-left: 5px;
             }
 
-        .footer-social-icon {
-            color: #b0b0b0;
-            font-size: 1.2rem;
-            margin-right: 15px;
+        .social-circle {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #555;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-white);
+            margin-right: 10px;
             transition: 0.3s;
+            text-decoration: none;
         }
 
-            .footer-social-icon:hover {
-                color: #ffffff;
+            .social-circle:hover {
+                background: var(--color-gold);
+                border-color: var(--color-gold);
+                color: var(--color-black);
             }
+
     </style>
 </head>
 <body>
     <header class="site-header">
-        <div class="container">
-            <div class="header-top">
-                <div class="social-links d-none d-md-block">
-                    <a href="#"><i class="bi bi-instagram"></i></a>
-                    <a href="#"><i class="bi bi-telegram"></i></a>
-                    <a href="#"><i class="bi bi-whatsapp"></i></a>
-                </div>
+        <div class="container header-container">
+            <!-- Логотип -->
+            <a asp-page="/Index" class="brand-logo">
+                PRAWODAR
+            </a>
 
-                <div class="text-center">
-                    <a asp-page="/Index" class="brand-logo">
-                        PRAWODAR<span style="color:var(--accent-gold)">.</span>
-                    </a>
-                    <span class="brand-subtitle">Lectorium & Events</span>
-                </div>
-
-                <div class="header-actions">
-                    @if (true)
-                    {
-                        <div class="dropdown admin-dropdown">
-                            <a class="dropdown-toggle text-uppercase small fw-bold" href="#" role="button" id="adminMenu" data-bs-toggle="dropdown" aria-expanded="false" style="color: #e74c3c;">
-                                <i class="bi bi-shield-lock"></i> Админ
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminMenu">
-                                <li><a class="dropdown-item" asp-area="Admin" asp-page="/Events/Index">Все события</a></li>
-                                <li><a class="dropdown-item" asp-area="Admin" asp-page="/Events/Create">+ Создать</a></li>
-                                <li><hr class="dropdown-divider bg-secondary"></li>
-                                <li><a class="dropdown-item" asp-area="Admin" asp-page="/Orders/Index">Заказы</a></li>
-                            </ul>
-                        </div>
-                    }
-
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-
-            <nav class="header-nav d-none d-md-flex">
+            <!-- Десктоп Меню -->
+            <nav class="d-none d-lg-flex align-items-center">
                 <a class="nav-link-custom" asp-page="/Index">Главная</a>
                 <a class="nav-link-custom" asp-page="/Events/Index">Афиша</a>
-                <a class="nav-link-custom" asp-page="/Contacts/About">О нас</a>
+                <a class="nav-link-custom" asp-page="/Rent/Index">Аренда</a>
                 <a class="nav-link-custom" asp-page="/Contacts/Contacts">Контакты</a>
+
+                <!-- Логин и Админка (встроены в Partial) -->
+                <div class="ms-4 border-start border-dark ps-4 d-flex align-items-center">
+                    <partial name="_LoginPartial" />
+                </div>
             </nav>
 
-            <div class="d-md-none text-center pb-3">
-                <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">
-                    Меню <i class="bi bi-list"></i>
-                </button>
-                <div class="collapse mt-3" id="mobileMenu">
-                    <a class="d-block py-2 text-white text-decoration-none" asp-page="/Index">Главная</a>
-                    <a class="d-block py-2 text-white text-decoration-none" asp-page="/Events/Index">Афиша</a>
-                </div>
-            </div>
+            <!-- Мобильное Меню Кнопка -->
+            <button class="btn d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
+                <i class="bi bi-list fs-1 text-dark"></i>
+            </button>
         </div>
     </header>
 
-    <main role="main" class="pb-3">
-        <div class="container-fluid p-0">
-            @RenderBody()
+    <!-- Мобильное меню (Offcanvas) -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu" style="font-family: 'Oswald', sans-serif;">
+        <div class="offcanvas-header border-bottom border-dark">
+            <h5 class="offcanvas-title fw-bold text-uppercase">Меню</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
+        <div class="offcanvas-body d-flex flex-column gap-3">
+            <a class="fs-4 text-dark text-decoration-none text-uppercase fw-bold" asp-page="/Events/Index">Афиша</a>
+            <a class="fs-4 text-dark text-decoration-none text-uppercase fw-bold" asp-page="/Rent/Index">Аренда</a>
+            <a class="fs-4 text-dark text-decoration-none text-uppercase fw-bold" asp-page="/Contacts/Contacts">Контакты</a>
+            <hr>
+            <partial name="_LoginPartial" />
+        </div>
+    </div>
+
+    <!-- ОСНОВНОЙ КОНТЕНТ (Без лишних контейнеров, чтобы Hero был во всю ширину) -->
+    <main role="main">
+        @RenderBody()
     </main>
 
     <footer class="site-footer">
         <div class="container">
             <div class="row gy-5">
-                <div class="col-lg-3 col-md-6">
-                    <h5 class="footer-title">EventSpace</h5>
-                    <p class="mb-4" style="line-height: 1.6; max-width: 90%;">
-                        Лекторий и творческое пространство в самом центре города. Место для идей и вдохновения.
+                <!-- Колонка 1: Лого и инфо -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-logo">PRAWODAR</div>
+                    <p class="mb-4 small text-secondary" style="line-height: 1.6; max-width: 90%;">
+                        ОТКРЫТОЕ ПРОСТРАНСТВО ДЛЯ ЛЕКЦИЙ, ВОРКШОПОВ И СОБЫТИЙ. <br>
+                        МИНСК, 2026.
                     </p>
                     <div class="d-flex">
-                        <a href="#" class="footer-social-icon"><i class="bi bi-instagram"></i></a>
-                        <a href="#" class="footer-social-icon"><i class="bi bi-telegram"></i></a>
-                        <a href="#" class="footer-social-icon"><i class="bi bi-youtube"></i></a>
+                        <a href="#" class="social-circle"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="social-circle"><i class="bi bi-telegram"></i></a>
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6">
-                    <h5 class="footer-title">Афиша</h5>
-                    <a href="#" class="footer-link">Расписание</a>
-                    <a href="#" class="footer-link">Курсы лекций</a>
-                    <a href="#" class="footer-link">Мастер-классы</a>
-                    <a href="#" class="footer-link">Архив событий</a>
+                <!-- Колонка 2: Навигация -->
+                <div class="col-lg-2 col-md-6 offset-lg-1">
+                    <h5 class="footer-title">Навигация</h5>
+                    <a asp-page="/Events/Index" class="footer-link">Афиша</a>
+                    <a asp-page="/Rent/Index" class="footer-link">Аренда зала</a>
+                    <a href="#" class="footer-link">О нас</a>
+                    <a href="#" class="footer-link">Правила</a>
                 </div>
 
-                <div class="col-lg-3 col-md-6">
-                    <h5 class="footer-title">Посетителям</h5>
-                    <a href="#" class="footer-link">Сертификаты</a>
-                    <a href="#" class="footer-link">Правила посещения</a>
+                <!-- Колонка 3: Для посетителей -->
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-title">Инфо</h5>
                     <a href="#" class="footer-link">Возврат билетов</a>
-                    <a href="#" class="footer-link">Частые вопросы</a>
+                    <a href="#" class="footer-link">Как добраться</a>
+                    <a href="#" class="footer-link">FAQ</a>
                 </div>
+
+                <!-- Колонка 4: Контакты -->
                 <div class="col-lg-3 col-md-6">
                     <h5 class="footer-title">Контакты</h5>
-                    <p class="mb-2 text-white"><i class="bi bi-geo-alt me-2 text-secondary"></i> Минск, ул. Пушкина, 100</p>
-                    <p class="mb-2 text-white"><i class="bi bi-telephone me-2 text-secondary"></i> +375 (29) 123-45-67</p>
-                    <p class="mb-2"><a href="mailto:info@eventspace.by" class="footer-link m-0" style="display:inline;">info@eventspace.by</a></p>
-                    <p class="mt-3 text-secondary small">Ежедневно с 10:00 до 22:00</p>
+                    <p class="mb-2 text-white font-monospace small"><i class="bi bi-geo-alt me-2 text-warning"></i> УЛ. ПУШКИНА, 100</p>
+                    <p class="mb-2 text-white font-monospace small"><i class="bi bi-telephone me-2 text-warning"></i> +375 (29) 123-45-67</p>
+                    <p class="mb-0"><a href="mailto:hello@prawodar.by" class="footer-link m-0" style="text-transform:lowercase;">hello@prawodar.by</a></p>
                 </div>
 
             </div>
-            <hr class="my-5" style="border-color: rgba(255,255,255,0.1); opacity: 1;">
 
-            <div class="row align-items-center">
-                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    <span class="small text-secondary">© @DateTime.Now.Year EventSpace. Все права защищены.</span>
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <a href="#" class="text-secondary small text-decoration-none me-3 hover-white">Политика конфиденциальности</a>
-                    <a href="#" class="text-secondary small text-decoration-none hover-white">Договор оферты</a>
+            <div class="border-top border-secondary mt-5 pt-4">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <span class="small text-secondary font-monospace">© @DateTime.Now.Year PRAWODAR. ALL RIGHTS RESERVED.</span>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <span class="small text-secondary font-monospace">DESIGNED FOR COFFEE LOVERS</span>
+                    </div>
                 </div>
             </div>
         </div>
